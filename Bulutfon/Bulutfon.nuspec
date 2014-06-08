@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Bulutfon</id>
+    <version>0.1.0</version>
+    <title>Bulutfon</title>
+    <authors>Bulutfon</authors>
+    <owners>Bulutfon</owners>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://www.bulutfon.com/</projectUrl>
+    <iconUrl>https://secure.gravatar.com/avatar/bca9c864ba50685f1442438acd6c3952</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Bulutfon SDK</description>
+    <releaseNotes>Initial package.</releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags></tags>
+  </metadata>
+</package>
