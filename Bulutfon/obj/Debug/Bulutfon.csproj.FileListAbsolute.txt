@@ -2,3 +2,13 @@ c:\users\h.türkü\documents\visual studio 2013\Projects\Bulutfon\Bulutfon\bin\D
 c:\users\h.türkü\documents\visual studio 2013\Projects\Bulutfon\Bulutfon\bin\Debug\Bulutfon.pdb
 c:\users\h.türkü\documents\visual studio 2013\Projects\Bulutfon\Bulutfon\obj\Debug\Bulutfon.dll
 c:\users\h.türkü\documents\visual studio 2013\Projects\Bulutfon\Bulutfon\obj\Debug\Bulutfon.pdb
+C:\Users\Ahmet\Source\Repos\dotNet-SDK\Bulutfon\bin\Debug\Bulutfon.dll
+C:\Users\Ahmet\Source\Repos\dotNet-SDK\Bulutfon\bin\Debug\Bulutfon.pdb
+C:\Users\Ahmet\Source\Repos\dotNet-SDK\Bulutfon\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Ahmet\Source\Repos\dotNet-SDK\Bulutfon\bin\Debug\OAuth2.dll
+C:\Users\Ahmet\Source\Repos\dotNet-SDK\Bulutfon\bin\Debug\RestSharp.dll
+C:\Users\Ahmet\Source\Repos\dotNet-SDK\Bulutfon\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Ahmet\Source\Repos\dotNet-SDK\Bulutfon\bin\Debug\RestSharp.xml
+C:\Users\Ahmet\Source\Repos\dotNet-SDK\Bulutfon\obj\Debug\Bulutfon.csprojResolveAssemblyReference.cache
+C:\Users\Ahmet\Source\Repos\dotNet-SDK\Bulutfon\obj\Debug\Bulutfon.dll
+C:\Users\Ahmet\Source\Repos\dotNet-SDK\Bulutfon\obj\Debug\Bulutfon.pdb
