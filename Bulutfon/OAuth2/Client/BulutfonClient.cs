@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using OAuth2.Client;
 using OAuth2.Configuration;
 using OAuth2.Infrastructure;
@@ -60,14 +61,34 @@ namespace Bulutfon.OAuth2.Client
             get { return "Bulutfon API"; }
         }
 
+        /// <summary>
+        /// Servisten alınan içeriğe göre <see cref="UserInfo"/> oluşturur ve döndürür
+        /// </summary>
+        /// <param name="content">Servisin sağladığı içerik</param>
+        /// <returns>Kullanıcı bilgileri</returns>
         protected override UserInfo ParseUserInfo(string content)
         {
-            throw new NotImplementedException();
+            var response = new JObject(content);
+            return new UserInfo()
+            {
+                // TODO
+                //Email = 
+            };
         }
 
+        /// <summary>
+        /// Giriş yapmış olan kullanıcının bilgilerine erişim sağlayan URI
+        /// </summary>
         protected override Endpoint UserInfoServiceEndpoint
         {
-            get { throw new NotImplementedException(); }
+            get 
+            { 
+                return new Endpoint 
+                {
+                    BaseUri = "https://www.bulutfon.com",
+                    Resource = string.Format("/me?{0}", AccessToken)
+                };
+            }
         }
     }
 }
