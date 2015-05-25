@@ -48,7 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bulutfon.cs" />
     <Compile Include="Models\Pbx.cs" />
     <Compile Include="OAuth2\Client\BulutfonClient.cs" />
     <Compile Include="Models\BulutfonUser.cs" />
