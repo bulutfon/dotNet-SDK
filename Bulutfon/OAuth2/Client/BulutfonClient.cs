@@ -67,11 +67,9 @@ namespace Bulutfon.OAuth2.Client
             var response = new JObject(content);
             return new BulutfonUser()
             {
-                Id = response["email"].Value<string>(),
-                Name = response["name"].Value<string>(),
-                Email = response["email"].Value<string>(),
-                Location = response["country"].Value<string>(),
-                Description = response["status"].Value<string>(),
+                Id = response["user"]["email"].Value<string>(),
+                Name = response["user"]["name"].Value<string>(),
+                Email = response["user"]["email"].Value<string>(),
                 Pbx = new Pbx() 
                 {
                     Name = response["pbx"]["name"].Value<string>(),
