@@ -16,17 +16,29 @@
         public string Url { get; set; }
 
         /// <summary>
-        /// Santral durumu
+        /// Santral durumu,
+        /// DRAFT: Taslak
+        /// RECANTED: Vazgeçildi
+        /// CONFIRMED: Onaylandı
+        /// CANCEL: İptal Edildi
+        /// SUSPENDED: Gelen aramalara kapalı
+        /// PRETERMINATED: Bütün aramalara kapalı
+        /// TERMINATED: Borçları nedeniyle kapatıldı
         /// </summary>
         public string State { get; set; }
 
         /// <summary>
-        /// Paket
+        /// Paket,
+        /// SMALL: Giriş Paketi
+        /// MIDDLE: Orta Paket
+        /// LARGE: Büyük Paket
         /// </summary>
         public string Package { get; set; }
 
         /// <summary>
-        /// Müşteri türü
+        /// Müşteri türü,
+        /// INVIDUAL: Bireysel Müşteri
+        /// CORPORATE: Kurumsal Müşteri
         /// </summary>
         public string CustomerType { get; set; }
     }
