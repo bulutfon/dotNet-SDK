@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Bulutfon.Models;
 using Newtonsoft.Json.Linq;
 using OAuth2.Client;
 using OAuth2.Configuration;
@@ -69,10 +70,12 @@ namespace Bulutfon.OAuth2.Client
         protected override UserInfo ParseUserInfo(string content)
         {
             var response = new JObject(content);
-            return new UserInfo()
+            return new BulutfonUser()
             {
-                // TODO
-                //Email = 
+                Id = response["email"].Value<string>(),
+                Email = response["email"].Value<string>(),
+                Location = response["country"].Value<string>(),
+                Description = response["status"].Value<string>()
             };
         }
 
