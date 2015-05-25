@@ -8,6 +8,11 @@ namespace Bulutfon.Models
     public class BulutfonUser : UserInfo
     {
         /// <summary>
+        /// Kullanıcının tam adı
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
         /// Ülkesi
         /// </summary>
         public string Location { get; set; }
