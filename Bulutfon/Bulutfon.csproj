@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Bulutfon.cs" />
     <Compile Include="OAuth2\Client\BulutfonClient.cs" />
+    <Compile Include="OAuth2\Client\BulutfonUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
