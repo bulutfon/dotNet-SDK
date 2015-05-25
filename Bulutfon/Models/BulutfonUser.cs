@@ -13,14 +13,9 @@ namespace Bulutfon.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Ülkesi
+        /// GSM Numarası
         /// </summary>
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Açıklama
-        /// </summary>
-        public string Description { get; set; }
+        public string Gsm { get; set; }
 
         /// <summary>
         /// PBX (Santral)
