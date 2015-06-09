@@ -71,6 +71,7 @@ namespace Bulutfon.OAuth2.Client
                 Name = response["user"]["name"].Value<string>(),
                 Gsm = response["gsm"].Value<string>(),
                 Email = response["user"]["email"].Value<string>(),
+
                 Pbx = new Pbx() 
                 {
                     Name = response["pbx"]["name"].Value<string>(),
