@@ -1,10 +1,10 @@
-﻿namespace Bulutfon.Model.Models
+﻿namespace Bulutfon.Model.Models.ResponseObjects
 {
     /// <summary>
     /// Bulutfon kullanıcı bilgisi
     /// GET /me.json
     /// </summary>
-    public class BulutfonUser
+    public class UserResponse
     {
         public User user { get; set; }
         public Pbx pbx { get; set; }
