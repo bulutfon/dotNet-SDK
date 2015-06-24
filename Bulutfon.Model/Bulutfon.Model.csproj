@@ -41,9 +41,15 @@
   <ItemGroup>
     <Compile Include="Models\Announcement.cs" />
     <Compile Include="Models\AutomaticCall.cs" />
+    <Compile Include="Models\CallFlow.cs" />
+    <Compile Include="Models\Cdr.cs" />
+    <Compile Include="Models\Pagination.cs" />
+    <Compile Include="Models\ResponseObjects\CdrResponse.cs" />
+    <Compile Include="Models\Origination.cs" />
     <Compile Include="Models\ResponseObjects\AutomaticCallResponse.cs" />
     <Compile Include="Models\CallRange.cs" />
     <Compile Include="Models\Recipient.cs" />
+    <Compile Include="Models\ResponseObjects\CdrsResponse.cs" />
     <Compile Include="Models\ResponseObjects\MeResponse.cs" />
     <Compile Include="Models\Credit.cs" />
     <Compile Include="Models\Pbx.cs" />
