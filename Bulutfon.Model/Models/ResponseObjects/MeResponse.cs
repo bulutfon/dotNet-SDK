@@ -4,7 +4,7 @@
     /// Bulutfon kullanıcı bilgisi
     /// GET /me.json
     /// </summary>
-    public class UserResponse
+    public class MeResponse
     {
         public User user { get; set; }
         public Pbx pbx { get; set; }
