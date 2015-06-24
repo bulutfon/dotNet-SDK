@@ -64,23 +64,23 @@ namespace Bulutfon.OAuth2.Client
         /// <returns>Kullanıcı bilgileri</returns>
         protected override UserInfo ParseUserInfo(string content)
         {
-            var response = new JObject(content);
-            return new BulutfonUser()
+            var response = JObject.Parse(content);
+            return new UserInfo()
             {
                 Id = response["user"]["email"].Value<string>(),
-                Name = response["user"]["name"].Value<string>(),
-                Gsm = response["gsm"].Value<string>(),
+                FirstName = response["user"]["name"].Value<string>(),
+                //Gsm = response["gsm"].Value<string>(),
                 Email = response["user"]["email"].Value<string>(),
 
-                Pbx = new Pbx() 
-                {
-                    Name = response["pbx"]["name"].Value<string>(),
-                    Url = response["pbx"]["url"].Value<string>(),
-                    State = response["pbx"]["state"].Value<string>(),
-                    Package = response["pbx"]["package"].Value<string>(),
-                    CustomerType = response["pbx"]["customer_type"].Value<string>()
-                },
-                Credit = response["credit"].Value<double>()
+                //Pbx = new Pbx() 
+                //{
+                //    Name = response["pbx"]["name"].Value<string>(),
+                //    Url = response["pbx"]["url"].Value<string>(),
+                //    State = response["pbx"]["state"].Value<string>(),
+                //    Package = response["pbx"]["package"].Value<string>(),
+                //    CustomerType = response["pbx"]["customer_type"].Value<string>()
+                //},
+                //Credit = response["credit"].Value<double>()
             };
         }
 
