@@ -1,10 +1,13 @@
-namespace Bulutfon.Model.Models
+﻿namespace Bulutfon.Model.Models
 {
     /// <summary>
-    /// Bor� bilgisi
+    /// Borç bilgisi
     /// </summary>
     public class Credit
     {
+        /// <summary>
+        /// Kalan kontör miktarı
+        /// </summary>
         public string balance { get; set; }
     }
 }

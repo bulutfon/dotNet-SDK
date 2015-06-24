@@ -1,6 +1,5 @@
 ﻿namespace Bulutfon.Model.Models
 {
-
     /// <summary>
     /// Bulutfon kullanıcı bilgisi
     /// GET /me.json
