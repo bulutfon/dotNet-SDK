@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Announcement.cs" />
     <Compile Include="Models\BulutfonUser.cs" />
     <Compile Include="Models\Credit.cs" />
     <Compile Include="Models\Pbx.cs" />
