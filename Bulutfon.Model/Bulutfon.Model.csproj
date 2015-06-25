@@ -45,9 +45,13 @@
     <Compile Include="Models\Cdr.cs" />
     <Compile Include="Models\Did.cs" />
     <Compile Include="Models\Extension.cs" />
+    <Compile Include="Models\FaxRecipient.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\IncomingFax.cs" />
     <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\Fax.cs" />
+    <Compile Include="Models\ResponseObjects\OutgoingFaxesResponse.cs" />
+    <Compile Include="Models\ResponseObjects\OutgoingFaxResponse.cs" />
     <Compile Include="Models\ResponseObjects\MessageResponse.cs" />
     <Compile Include="Models\MessageTitle.cs" />
     <Compile Include="Models\MessageRecipient.cs" />
