@@ -8,7 +8,7 @@
         public object number { get; set; }
 
         /// <summary>
-        /// Çağrı başarılı mı
+        /// Çağrı başarılı mı?
         /// </summary>
         public bool has_called { get; set; }
 
