@@ -45,6 +45,7 @@
     <Compile Include="Models\Cdr.cs" />
     <Compile Include="Models\Did.cs" />
     <Compile Include="Models\Extension.cs" />
+    <Compile Include="Models\Group.cs" />
     <Compile Include="Models\ResponseObjects\ExtensionResponse.cs" />
     <Compile Include="Models\ResponseObjects\DidsResponse.cs" />
     <Compile Include="Models\ResponseObjects\DidResponse.cs" />
@@ -57,6 +58,8 @@
     <Compile Include="Models\Recipient.cs" />
     <Compile Include="Models\ResponseObjects\CdrsResponse.cs" />
     <Compile Include="Models\ResponseObjects\ExtensionsResponse.cs" />
+    <Compile Include="Models\ResponseObjects\GroupResponse.cs" />
+    <Compile Include="Models\ResponseObjects\GroupsResponse.cs" />
     <Compile Include="Models\ResponseObjects\MeResponse.cs" />
     <Compile Include="Models\Credit.cs" />
     <Compile Include="Models\Pbx.cs" />
