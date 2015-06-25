@@ -43,6 +43,10 @@
     <Compile Include="Models\AutomaticCall.cs" />
     <Compile Include="Models\CallFlow.cs" />
     <Compile Include="Models\Cdr.cs" />
+    <Compile Include="Models\Did.cs" />
+    <Compile Include="Models\ResponseObjects\DidsResponse.cs" />
+    <Compile Include="Models\ResponseObjects\DidResponse.cs" />
+    <Compile Include="Models\DidWorkDay.cs" />
     <Compile Include="Models\Pagination.cs" />
     <Compile Include="Models\ResponseObjects\CdrResponse.cs" />
     <Compile Include="Models\Origination.cs" />
@@ -56,6 +60,7 @@
     <Compile Include="Models\ResponseObjects\AnnouncementResponse.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\WorkDay.cs" />
+    <Compile Include="Models\WorkingHours.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
