@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Bulutfon.Model.Models.Did>
+
+@{
+    ViewBag.Title = "Dids";
+}
+
+<h2>Dids</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.state)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.destination_type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.destination_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.destination_number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.working_hour)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.state)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.destination_type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.destination_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.destination_number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.working_hour)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

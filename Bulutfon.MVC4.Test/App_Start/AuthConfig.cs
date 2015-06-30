@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Web.WebPages.OAuth;
 using Bulutfon.MVC4.Test.Models;
+using Bulutfon.MVC4.OAuth;
 
 namespace Bulutfon.MVC4.Test
 {
@@ -22,11 +23,16 @@ namespace Bulutfon.MVC4.Test
             //    consumerKey: "",
             //    consumerSecret: "");
 
-            OAuthWebSecurity.RegisterFacebookClient(
-                appId: "",
-                appSecret: "");
+            //OAuthWebSecurity.RegisterFacebookClient(
+            //    appId: "",
+            //    appSecret: "");
 
             //OAuthWebSecurity.RegisterGoogleClient();
+
+            OAuthWebSecurity.RegisterClient(new BulutfonClient(
+                clientId:"d68a8d69c16b6ac209980dc5ec7b381933d91c71ca37d83e8e5c64b0ae2f3f9e", 
+                clientSecret:"6b9f79ac744ce39a61b1ba236782b7de4d54a96f9f6c43077449cd86c9e9f799"), 
+                "Bulutfon", null);
         }
     }
 }
