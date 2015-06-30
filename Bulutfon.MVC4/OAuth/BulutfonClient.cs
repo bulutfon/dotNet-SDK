@@ -14,7 +14,8 @@ namespace Bulutfon.MVC4.OAuth {
     /// Bulutfon OAuth Client
     /// </summary>
     public class BulutfonClient : OAuth2Client {
-        #region Constants and Fields
+
+        #region Sabitler ve alanlar
 
         /// <summary>
         /// Authorization endpoint.
@@ -64,20 +65,6 @@ namespace Bulutfon.MVC4.OAuth {
                 ret.Add("user_id", result["user"]["email"].ToString());
                 ret.Add("user_name", result["user"]["email"].ToString());
                 return ret;
-            }
-        }
-
-        public static T GetObject<T>(string uri, string token, string key = "") where T : class {
-            const string tokenKey = "?access_token=";
-            using (WebClient client = new WebClient()) {
-                var keyValue = string.Empty;
-                if (!string.IsNullOrEmpty(key))
-                    keyValue = string.Format("/{0}", keyValue);
-                string str = client.DownloadString(uri + keyValue + tokenKey + token);
-                if (string.IsNullOrEmpty(str)) {
-                    return null;
-                }
-                return JsonConvert.DeserializeObject<T>(str);
             }
         }
 

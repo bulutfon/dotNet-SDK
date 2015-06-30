@@ -6,7 +6,7 @@ namespace Bulutfon.Model.Models.ResponseObjects
     /// Ses dosyaları
     /// GET /announcements.json
     /// </summary>
-    public class AnnouncementResponse
+    public class AnnouncementsResponse
     {
         public List<Announcement> announcements { get; set; }
     }
