@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Net;
+using System.Web.Mvc;
 using BitMiracle.LibTiff.Classic;
 using Bulutfon.Model.Models;
 using Bulutfon.Model.Models.ResponseObjects;
@@ -130,18 +130,36 @@ namespace Bulutfon.MVC4.Api {
             return GetObject<IncomingFaxesResponse>("incoming-faxes", token).incoming_faxes;
         }
 
-        public static Tiff GetIncomingFaxAsTiff(string token, string id) {
+        /// <summary>
+        /// Gelen faks STREAM olarak
+        /// </summary>
+        /// <param name="token">Access token</param>
+        /// <param name="id">Id</param>
+        /// <returns>Stream olarak faks (TIFF)</returns>
+        public static Stream GetIncomingFaxStream(string token, string id) {
             var data = GetObject<byte[]>("incoming-faxes", token, id);
-            var stream = new MemoryStream(data);
-            var image = Tiff.ClientOpen("in-memory", "r", stream, new TiffStream());
-            return image;
+            return new MemoryStream(data);
         }
 
-        // TODO:
-        //public static Bitmap GetIncomingFaxAsBitmap(string token, string id) {
-        //    var tiff = GetIncomingFaxAsTiff(token, id);
+        /// <summary>
+        /// Gelen faks TIFF olarak
+        /// </summary>
+        /// <param name="token">Access token</param>
+        /// <param name="id">Id</param>
+        /// <returns>Tiff nesnesi olarak gelen faks</returns>
+        public static Tiff GetIncomingFaxAsTiff(string token, string id) {
+            return Tiff.ClientOpen("in-memory", "r", GetIncomingFaxStream(token, id), new TiffStream());
+        }
 
-        //}
+        /// <summary>
+        /// Gelen faksı dosya olarak indir (TIFF)
+        /// </summary>
+        /// <param name="token">Access token</param>
+        /// <param name="id">Id</param>
+        /// <returns>FileStreamResult olarak faks</returns>
+        public static FileStreamResult DownloadIncomingFaxAsTiff(string token, string id) {
+            return new FileStreamResult(GetIncomingFaxStream(token, id), "image/tiff");
+        }
 
         /// <summary>
         /// Kullanıcı bilgileri
