@@ -127,6 +127,8 @@ namespace Bulutfon.MVC4.Api {
             return GetObject<IncomingFaxesResponse>("incoming-faxes", token).incoming_faxes;
         }
 
+        
+
         /// <summary>
         /// Kullanıcı bilgileri
         /// </summary>
