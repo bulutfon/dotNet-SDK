@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Net;
+using BitMiracle.LibTiff.Classic;
 using Bulutfon.Model.Models;
 using Bulutfon.Model.Models.ResponseObjects;
 using Newtonsoft.Json;
@@ -127,7 +130,18 @@ namespace Bulutfon.MVC4.Api {
             return GetObject<IncomingFaxesResponse>("incoming-faxes", token).incoming_faxes;
         }
 
-        
+        public static Tiff GetIncomingFaxAsTiff(string token, string id) {
+            var data = GetObject<byte[]>("incoming-faxes", token, id);
+            var stream = new MemoryStream(data);
+            var image = Tiff.ClientOpen("in-memory", "r", stream, new TiffStream());
+            return image;
+        }
+
+        // TODO:
+        //public static Bitmap GetIncomingFaxAsBitmap(string token, string id) {
+        //    var tiff = GetIncomingFaxAsTiff(token, id);
+
+        //}
 
         /// <summary>
         /// Kullanıcı bilgileri
