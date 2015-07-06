@@ -10,6 +10,12 @@ namespace Mvc4Demo.Controllers
     public class HomeController : Controller
     {
         [Authorize]
+        public ActionResult Did(string id) {
+            var did = BulutfonApi.GetDid(Session["token"].ToString(), id);
+            return View(did);
+        }
+
+        [Authorize]
         public ActionResult Dids()
         {
             var dids = BulutfonApi.GetDids(Session["token"].ToString());

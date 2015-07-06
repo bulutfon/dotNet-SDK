@@ -306,6 +306,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Dids.cshtml" />
+    <Content Include="Views\Home\Did.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

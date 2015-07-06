@@ -18,7 +18,7 @@ namespace Bulutfon.MVC4.Api {
             using (WebClient client = new WebClient()) {
                 var keyValue = string.Empty;
                 if (!string.IsNullOrEmpty(key))
-                    keyValue = string.Format("/{0}", keyValue);
+                    keyValue = string.Format("/{0}", key);
                 string str = client.DownloadString(Endpoint + uri + keyValue + tokenKey + token);
                 if (string.IsNullOrEmpty(str)) {
                     return null;

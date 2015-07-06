@@ -1,0 +1,57 @@
+﻿@model Bulutfon.Model.Models.Did
+
+@{
+    ViewBag.Title = "Did";
+}
+
+<h2>Did</h2>
+
+<fieldset>
+    <legend>Did</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.number)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.number)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.state)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.state)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.destination_type)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.destination_type)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.destination_id)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.destination_id)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.destination_number)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.destination_number)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.working_hour)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.working_hour)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
