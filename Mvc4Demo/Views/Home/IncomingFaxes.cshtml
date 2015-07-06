@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Bulutfon.Model.Models.IncomingFax>
+
+@{
+    ViewBag.Title = "IncomingFaxes";
+}
+
+<h2>IncomingFaxes</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.uuid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.created_at)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.uuid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.created_at)
+        </td>
+        <td>
+            @Html.ActionLink("İndir", "DownloadFax", new {  id=item.uuid  }) 
+        </td>
+    </tr>
+}
+
+</table>

@@ -27,6 +27,16 @@ namespace Bulutfon.MVC4.Api {
             }
         }
 
+        public static byte[] GetStream(string uri, string token, string key = "") {
+            const string tokenKey = "?access_token=";
+            using (WebClient client = new WebClient()) {
+                var keyValue = string.Empty;
+                if (!string.IsNullOrEmpty(key))
+                    keyValue = string.Format("/{0}", key);
+                return client.DownloadData(Endpoint + uri + keyValue + tokenKey + token);
+            }
+        }
+
         /// <summary>
         /// Anonslar
         /// </summary>
@@ -137,7 +147,7 @@ namespace Bulutfon.MVC4.Api {
         /// <param name="id">Id</param>
         /// <returns>Stream olarak faks (TIFF)</returns>
         public static Stream GetIncomingFaxStream(string token, string id) {
-            var data = GetObject<byte[]>("incoming-faxes", token, id);
+            var data = GetStream("incoming-faxes", token, id);
             return new MemoryStream(data);
         }
 
@@ -153,6 +163,7 @@ namespace Bulutfon.MVC4.Api {
 
         /// <summary>
         /// Gelen faksı dosya olarak indir (TIFF)
+        /// Bu metot MVC4 projelerine yöneliktir
         /// </summary>
         /// <param name="token">Access token</param>
         /// <param name="id">Id</param>

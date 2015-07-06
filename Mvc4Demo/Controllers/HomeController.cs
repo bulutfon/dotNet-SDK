@@ -16,10 +16,20 @@ namespace Mvc4Demo.Controllers
         }
 
         [Authorize]
-        public ActionResult Dids()
-        {
+        public ActionResult Dids() {
             var dids = BulutfonApi.GetDids(Session["token"].ToString());
             return View(dids);
+        }
+
+        [Authorize]
+        public ActionResult IncomingFaxes() {
+            var faxes = BulutfonApi.GetIncomingFaxes(Session["token"].ToString());
+            return View(faxes);
+        }
+
+        [Authorize]
+        public ActionResult DownloadFax(string id) {
+            return BulutfonApi.DownloadIncomingFaxAsTiff(Session["token"].ToString(), id);
         }
 
         public ActionResult Index()
