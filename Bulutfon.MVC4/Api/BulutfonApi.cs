@@ -1,9 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Text;
+using System.Web;
 using System.Web.Mvc;
 using BitMiracle.LibTiff.Classic;
 using Bulutfon.Model.Models;
+using Bulutfon.Model.Models.Post;
 using Bulutfon.Model.Models.ResponseObjects;
 using Newtonsoft.Json;
 
@@ -25,6 +29,47 @@ namespace Bulutfon.MVC4.Api {
                 }
                 return JsonConvert.DeserializeObject<T>(str);
             }
+        }
+
+        private static TResponse PostObject<TRequest, TResponse>(string uri, string token, TRequest data) 
+            where TRequest : class 
+            where TResponse : class {
+
+            const string tokenKey = "?access_token=";
+            using (WebClient client = new WebClient()) {
+                var value = JsonConvert.SerializeObject(data);
+                var stream = new MemoryStream(Encoding.UTF8.GetBytes(value ?? ""));
+                var ret = client.UploadData(Endpoint + uri + tokenKey + token, stream.ToArray());
+                if (ret == null || ret.Length == 0) {
+                    return null;
+                }
+                return JsonConvert.DeserializeObject<TResponse>(Encoding.ASCII.GetString(ret));
+            }
+        }
+
+        private static string GetAttachmentText(string fileType, string fileName, Stream stream) {
+            var template = "data:{0};name:{1};base64:{2}";
+            byte[] data = new byte[(int)stream.Length];
+            stream.Read(data, 0, (int)stream.Length);
+            return string.Format(template, fileType, fileName, Convert.ToBase64String(data));
+        }
+
+        public static ResponseOutgoingFax SendFax(string token, string fileType, string fileName, Stream stream , 
+                                                  string recievers, long did, string title = "") {
+            var fax = new RequestOutgoingFax() {
+                recievers = recievers,
+                did = did,
+                title = title,
+                attachment = GetAttachmentText(fileType, fileName, stream)
+            };
+            var ret = PostObject<RequestOutgoingFax, ResponseOutgoingFax>("outgoing-faxes", token, fax);
+            return ret;
+        }
+
+        public static ResponseOutgoingFax SendFax(string token, HttpPostedFileBase file, 
+                                                  string recievers, long did, string title = "") {
+
+            return SendFax(token, file.ContentType, Path.GetFileName(file.FileName), file.InputStream, recievers, did, title);
         }
 
         public static byte[] GetStream(string uri, string token, string key = "") {

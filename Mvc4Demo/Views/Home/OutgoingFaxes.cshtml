@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Bulutfon.Model.Models.Fax>
+
+@{
+    ViewBag.Title = "OutgoingFaxes";
+}
+
+<h2>OutgoingFaxes</h2>
+
+<p>
+    @Html.ActionLink("Faks Gönder", "UploadFax")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.did)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.recipient_count)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.created_at)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.did)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.recipient_count)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.created_at)
+        </td>
+        <td>
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.id }) |*@
+            @Html.ActionLink("Ayrıntılar", "OutgoingFax", new { id=item.id }) 
+            @*@Html.ActionLink("Delete", "Delete", new { id=item.id })*@
+        </td>
+    </tr>
+}
+
+</table>

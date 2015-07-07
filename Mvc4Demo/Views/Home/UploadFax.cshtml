@@ -1,0 +1,60 @@
+﻿@model Mvc4Demo.Models.OutgoingFaxForm
+
+@{
+    ViewBag.Title = "UploadFax";
+}
+
+<h2>UploadFax</h2>
+@using (Html.BeginForm("UploadFax", "Home", FormMethod.Post, new { encType = "multipart/form-data" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>OutgoingFaxForm</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.title)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.title)
+            @Html.ValidationMessageFor(model => model.title)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.recievers)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.recievers)
+            @Html.ValidationMessageFor(model => model.recievers)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.did)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.did)
+            @Html.ValidationMessageFor(model => model.did)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.attachment)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.attachment, new { type = "file" })
+            @Html.ValidationMessageFor(model => model.attachment)
+        </div>
+
+        <p>
+            @*@Html.ActionLink("Faksı Gönder", "UploadFaxFile")*@
+            <input type="submit" value="UploadFaxFile" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -50,6 +50,8 @@
     <Compile Include="Models\IncomingFax.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Fax.cs" />
+    <Compile Include="Models\Post\RequestOutgoingFax.cs" />
+    <Compile Include="Models\Post\ResponseOutgoingFax.cs" />
     <Compile Include="Models\ResponseObjects\OutgoingFaxesResponse.cs" />
     <Compile Include="Models\ResponseObjects\OutgoingFaxResponse.cs" />
     <Compile Include="Models\ResponseObjects\MessageResponse.cs" />

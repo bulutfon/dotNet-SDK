@@ -41,6 +41,8 @@ namespace Bulutfon.MVC4.OAuth {
         }
 
         protected BulutfonClient(string providerName, string clientId, string clientSecret) : base(providerName) {
+            if (string.IsNullOrWhiteSpace(clientId) || string.IsNullOrWhiteSpace(clientSecret))
+                throw new ArgumentNullException("client id ya da client secret belirtilmemiş!");
             this.ClientId = clientId;
             this.ClientSecret = clientSecret;
         }

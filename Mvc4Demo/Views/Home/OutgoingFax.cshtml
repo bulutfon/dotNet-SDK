@@ -1,0 +1,43 @@
+﻿@model Bulutfon.Model.Models.Fax
+
+@{
+    ViewBag.Title = "OutgoingFax";
+}
+
+<h2>OutgoingFax</h2>
+
+<fieldset>
+    <legend>Fax</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.title)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.title)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.did)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.did)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.recipient_count)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.recipient_count)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.created_at)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.created_at)
+    </div>
+</fieldset>
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { id=Model.id }) |*@
+    @Html.ActionLink("< Listeye Geri Dön", "Index")
+</p>

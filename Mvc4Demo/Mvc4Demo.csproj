@@ -192,6 +192,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\OutgoingFaxForm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -308,6 +309,9 @@
     <Content Include="Views\Home\Dids.cshtml" />
     <Content Include="Views\Home\Did.cshtml" />
     <Content Include="Views\Home\IncomingFaxes.cshtml" />
+    <Content Include="Views\Home\OutgoingFaxes.cshtml" />
+    <Content Include="Views\Home\OutgoingFax.cshtml" />
+    <Content Include="Views\Home\UploadFax.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
