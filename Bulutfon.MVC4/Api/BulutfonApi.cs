@@ -20,6 +20,7 @@ namespace Bulutfon.MVC4.Api {
                 if (!string.IsNullOrEmpty(key))
                     keyValue = string.Format("/{0}", key);
                 string str = client.DownloadString(Endpoint + uri + keyValue + tokenKey + token);
+                //TODO hata oluştuğunda hata açıklaması ile birlikte throw edilmeli.
                 if (string.IsNullOrEmpty(str)) {
                     return null;
                 }

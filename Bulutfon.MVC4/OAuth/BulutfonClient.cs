@@ -34,21 +34,39 @@ namespace Bulutfon.MVC4.OAuth {
 
         #endregion
 
-        public string ClientId {get; private set;}
-        public string ClientSecret {get; private set;}
+        private readonly string clientId;
+        private readonly string clientSecret;
+        private readonly string[] requestedScopes;
 
-        public BulutfonClient(string clientId, string clientSecret) : this("Bulutfon", clientId, clientSecret) {
+        public BulutfonClient(string clientId, string clientSecret) : this("Bulutfon", clientId, clientSecret, new string[] {}) {
         }
 
-        protected BulutfonClient(string providerName, string clientId, string clientSecret) : base(providerName) {
-            this.ClientId = clientId;
-            this.ClientSecret = clientSecret;
+        public BulutfonClient(string clientId, string clientSecret, params string[] requestedScopes)
+            : this("Bulutfon", clientId, clientSecret, requestedScopes)
+        {
+        }
+
+        protected BulutfonClient(string providerName, string clientId, string clientSecret, string[] requestedScopes)
+            : base(providerName)
+        {
+            if (string.IsNullOrWhiteSpace(providerName)){
+                throw new ArgumentNullException("providerName");
+            }
+            if (string.IsNullOrWhiteSpace(clientId)){
+                throw new ArgumentNullException("clientId");
+            }
+            if (string.IsNullOrWhiteSpace(clientSecret)){
+                throw new ArgumentNullException("clientSecret");
+            }
+            this.clientId = clientId;
+            this.clientSecret = clientSecret;
+            this.requestedScopes = requestedScopes;
         }
         
         protected override Uri GetServiceLoginUrl(Uri returnUrl) {
             var builder = new UriBuilder(AuthorizationEndpoint);
             builder.AppendQueryArgument("response_type", "code");
-            builder.AppendQueryArgument("client_id", this.ClientId);
+            builder.AppendQueryArgument("client_id", this.clientId);
             builder.AppendQueryArgument("redirect_uri", returnUrl.AbsoluteUri);
             return builder.Uri;
         }
@@ -70,21 +88,21 @@ namespace Bulutfon.MVC4.OAuth {
 
         protected override string QueryAccessToken(Uri returnUrl, string authorizationCode) {
             var dic = new Dictionary<string, string>();
-            dic.Add("client_id", this.ClientId);
+            dic.Add("client_id", this.clientId);
             dic.Add("redirect_uri", returnUrl.AbsoluteUri);
-            dic.Add("client_secret", this.ClientSecret);
+            dic.Add("client_secret", this.clientSecret);
             dic.Add("code", authorizationCode);
             dic.Add("scope", "cdr");
             dic.Add("grant_type", "authorization_code");
-            
+
             string postData = "";
             string postDataSperator = "";
             foreach(var i in dic) {
-                postData += string.Format("{0}{1}={2}", 
-                    postDataSperator, HttpUtility.UrlEncode(i.Key), HttpUtility.UrlEncode(i.Value));
+                postData += string.Format("{0}{1}={2}", postDataSperator, HttpUtility.UrlEncode(i.Key), HttpUtility.UrlEncode(i.Value));
                 postDataSperator = "&";
             }
             using (WebClient client = new WebClient()) {
+                //client.Headers["ContentType"] = "application/x-www-form-urlencoded";
                 string str = client.UploadString(TokenEndpoint, postData);
                 if (string.IsNullOrEmpty(str)) {
                     return null;
@@ -94,6 +112,7 @@ namespace Bulutfon.MVC4.OAuth {
             }
         }
 
+        //TODO bu metod override yapılmadan çağırılabilir mi?
         public override AuthenticationResult VerifyAuthentication(HttpContextBase context, Uri returnPageUrl) {
             string code = context.Request.QueryString["code"];
             if (string.IsNullOrEmpty(code))
@@ -101,6 +120,8 @@ namespace Bulutfon.MVC4.OAuth {
 
             string accessToken = this.QueryAccessToken(returnPageUrl, code);
 
+            //TODO session nesnesinin içinden bir alanın kullanılması bir bileşen için iyi bir yöntem değil. 
+            //Bu nedenle "token" bilgisi user yada benzeri bir nesne üzerinden alınması ya da session üzerindeki key'in "Bulutfon_User_token" gibi bir key ile tutulması daha uygun olacaktır.
             context.Session["token"] = accessToken;
 
             if (accessToken == null)

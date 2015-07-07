@@ -1,1 +1,12 @@
 .DS_Store
+/Bulutfon/bin
+/Bulutfon/obj
+/Bulutfon.Model/bin
+/Bulutfon.Model/obj
+/Bulutfon.MVC4/bin
+/Bulutfon.MVC4/obj
+/Mvc4Demo/bin
+/Mvc4Demo/obj
+/packages
+*.user
+*.suo
