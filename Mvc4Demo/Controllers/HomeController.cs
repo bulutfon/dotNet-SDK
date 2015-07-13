@@ -59,7 +59,7 @@ namespace Mvc4Demo.Controllers
             if (outgoingFax.attachment != null && outgoingFax.attachment.ContentLength > 0) {
                 /*var ret =*/ BulutfonApi.SendFax(Session["token"].ToString(), 
                     outgoingFax.attachment, // faks dosyası
-                    outgoingFax.recievers, // alıcılar
+                    outgoingFax.receivers, // alıcılar
                     outgoingFax.did, // gönderen numara
                     outgoingFax.title); // başlık
                 // TODO: ret nesnesi üzerinden her bir alıcıya ait gönderme durumu raporlanabilir
