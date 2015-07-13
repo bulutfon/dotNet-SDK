@@ -13,9 +13,12 @@ using Newtonsoft.Json;
 
 namespace Bulutfon.MVC4.Api {
 
+    /// <summary>
+    /// Bulutfon Servislerine Ulaşmak İçin Gerekli Metotları Sağlar
+    /// </summary>
     public static class BulutfonApi {
 
-        public const string Endpoint = "https://api.bulutfon.com/";
+        public const string BaseUri = "https://api.bulutfon.com/";
 
         public static T GetObject<T>(string uri, string token, string key = "") where T : class {
             const string tokenKey = "?access_token=";
@@ -23,7 +26,7 @@ namespace Bulutfon.MVC4.Api {
                 var keyValue = string.Empty;
                 if (!string.IsNullOrEmpty(key))
                     keyValue = string.Format("/{0}", key);
-                string str = client.DownloadString(Endpoint + uri + keyValue + tokenKey + token);
+                string str = client.DownloadString(BaseUri + uri + keyValue + tokenKey + token);
                 if (string.IsNullOrEmpty(str)) {
                     return null;
                 }
@@ -44,7 +47,7 @@ namespace Bulutfon.MVC4.Api {
                 var stream = new MemoryStream(Encoding.UTF8.GetBytes(value ?? ""));
                 client.Headers[HttpRequestHeader.ContentType] = "application/json";
                 client.Headers[HttpRequestHeader.ContentEncoding] = "UTF-8";
-                var ret = client.UploadData(Endpoint + uri + tokenKey + token, stream.ToArray());
+                var ret = client.UploadData(BaseUri + uri + tokenKey + token, stream.ToArray());
                 if (ret == null || ret.Length == 0) {
                     return null;
                 }
@@ -59,6 +62,17 @@ namespace Bulutfon.MVC4.Api {
             return string.Format(template, fileType, fileName, Convert.ToBase64String(data));
         }
 
+        /// <summary>
+        /// Faks gönder
+        /// </summary>
+        /// <param name="token">Acess token</param>
+        /// <param name="fileType">Dosya türü</param>
+        /// <param name="fileName">Dosya adı</param>
+        /// <param name="stream">Binary formatta dosya</param>
+        /// <param name="receivers">Alıcılar</param>
+        /// <param name="did">Gönderen</param>
+        /// <param name="title">Başlık</param>
+        /// <returns>Gönderim durumu</returns>
         public static ResponseOutgoingFax SendFax(string token, string fileType, string fileName, Stream stream , 
                                                   string receivers, long did, string title = "") {
             var fax = new RequestOutgoingFax() {
@@ -71,19 +85,35 @@ namespace Bulutfon.MVC4.Api {
             return ret;
         }
 
+        /// <summary>
+        /// Faks gönder
+        /// </summary>
+        /// <param name="token">Acess token</param>
+        /// <param name="file">Dosya</param>
+        /// <param name="receivers">Alıcılar</param>
+        /// <param name="did">Gönderen</param>
+        /// <param name="title">Başlık</param>
+        /// <returns>Gönderim durumu</returns>
         public static ResponseOutgoingFax SendFax(string token, HttpPostedFileBase file, 
-                                                  string recievers, long did, string title = "") {
+                                                  string receivers, long did, string title = "") {
 
-            return SendFax(token, file.ContentType, Path.GetFileName(file.FileName), file.InputStream, recievers, did, title);
+            return SendFax(token, file.ContentType, Path.GetFileName(file.FileName), file.InputStream, receivers, did, title);
         }
 
+        /// <summary>
+        /// Dosya indir
+        /// </summary>
+        /// <param name="uri">Adres</param>
+        /// <param name="token">Access token</param>
+        /// <param name="key">Id</param>
+        /// <returns>Binary formatta dosya</returns>
         public static byte[] GetStream(string uri, string token, string key = "") {
             const string tokenKey = "?access_token=";
             using (WebClient client = new WebClient()) {
                 var keyValue = string.Empty;
                 if (!string.IsNullOrEmpty(key))
                     keyValue = string.Format("/{0}", key);
-                return client.DownloadData(Endpoint + uri + keyValue + tokenKey + token);
+                return client.DownloadData(BaseUri + uri + keyValue + tokenKey + token);
             }
         }
 
