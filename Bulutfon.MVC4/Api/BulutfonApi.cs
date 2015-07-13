@@ -60,9 +60,9 @@ namespace Bulutfon.MVC4.Api {
         }
 
         public static ResponseOutgoingFax SendFax(string token, string fileType, string fileName, Stream stream , 
-                                                  string recievers, long did, string title = "") {
+                                                  string receivers, long did, string title = "") {
             var fax = new RequestOutgoingFax() {
-                recievers = recievers,
+                receivers = receivers,
                 did = did,
                 title = title,
                 attachment = GetAttachmentText(fileType, fileName, stream)
