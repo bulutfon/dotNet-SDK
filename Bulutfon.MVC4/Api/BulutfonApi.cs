@@ -18,6 +18,9 @@ namespace Bulutfon.MVC4.Api {
     /// </summary>
     public static class BulutfonApi {
 
+        /// <summary>
+        /// https://api.bulutfon.com/
+        /// </summary>
         public const string BaseUri = "https://api.bulutfon.com/";
 
         /// <summary>
@@ -57,9 +60,6 @@ namespace Bulutfon.MVC4.Api {
 
             const string tokenKey = "?access_token=";
             using (WebClient client = new WebClient()) {
-                var settings = new JsonSerializerSettings();
-                settings.Formatting = Formatting.Indented;
-                settings.DefaultValueHandling = DefaultValueHandling.Ignore;
                 var value = JsonConvert.SerializeObject(data, Formatting.None);
                 var stream = new MemoryStream(Encoding.UTF8.GetBytes(value ?? ""));
                 client.Headers[HttpRequestHeader.ContentType] = "application/json";
