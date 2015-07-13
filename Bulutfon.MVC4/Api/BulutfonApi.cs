@@ -42,13 +42,13 @@ namespace Bulutfon.MVC4.Api {
                 settings.DefaultValueHandling = DefaultValueHandling.Ignore;
                 var value = JsonConvert.SerializeObject(data, Formatting.None);
                 var stream = new MemoryStream(Encoding.UTF8.GetBytes(value ?? ""));
-                client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                client.Headers[HttpRequestHeader.ContentType] = "application/json";
                 client.Headers[HttpRequestHeader.ContentEncoding] = "UTF-8";
-                var ret = client.UploadString(Endpoint + uri + tokenKey + token, Encoding.UTF8.GetString(stream.ToArray()));
+                var ret = client.UploadData(Endpoint + uri + tokenKey + token, stream.ToArray());
                 if (ret == null || ret.Length == 0) {
                     return null;
                 }
-                return JsonConvert.DeserializeObject<TResponse>(ret);
+                return JsonConvert.DeserializeObject<TResponse>(Encoding.UTF8.GetString(ret));
             }
         }
 
