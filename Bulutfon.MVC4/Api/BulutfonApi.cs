@@ -20,6 +20,14 @@ namespace Bulutfon.MVC4.Api {
 
         public const string BaseUri = "https://api.bulutfon.com/";
 
+        /// <summary>
+        /// GET (REST)
+        /// </summary>
+        /// <typeparam name="T">Nesne sınıfı</typeparam>
+        /// <param name="uri">Adres</param>
+        /// <param name="token">Access token</param>
+        /// <param name="key">Id (opsiyonel)</param>
+        /// <returns>Servisten dönen nesne</returns>
         public static T GetObject<T>(string uri, string token, string key = "") where T : class {
             const string tokenKey = "?access_token=";
             using (WebClient client = new WebClient()) {
@@ -34,6 +42,15 @@ namespace Bulutfon.MVC4.Api {
             }
         }
 
+        /// <summary>
+        /// POST (REST)
+        /// </summary>
+        /// <typeparam name="TRequest">Request sınıfı</typeparam>
+        /// <typeparam name="TResponse">Response sınıfı</typeparam>
+        /// <param name="uri">Adres</param>
+        /// <param name="token">Access token</param>
+        /// <param name="data">Veri (nesne)</param>
+        /// <returns>Servisten dönen nesne</returns>
         private static TResponse PostObject<TRequest, TResponse>(string uri, string token, TRequest data) 
             where TRequest : class 
             where TResponse : class {
@@ -55,6 +72,13 @@ namespace Bulutfon.MVC4.Api {
             }
         }
 
+        /// <summary>
+        /// Gönderilen faks dosyasını metin olarak (base64) hazırlar
+        /// </summary>
+        /// <param name="fileType">Dosya türü</param>
+        /// <param name="fileName">Dosya adı</param>
+        /// <param name="stream">Binary formatta dosya</param>
+        /// <returns></returns>
         private static string GetAttachmentText(string fileType, string fileName, Stream stream) {
             var template = "data:{0};name:{1};base64:{2}";
             byte[] data = new byte[(int)stream.Length];
@@ -81,8 +105,7 @@ namespace Bulutfon.MVC4.Api {
                 title = title,
                 attachment = GetAttachmentText(fileType, fileName, stream)
             };
-            var ret = PostObject<RequestOutgoingFax, ResponseOutgoingFax>("outgoing-faxes", token, fax);
-            return ret;
+            return PostObject<RequestOutgoingFax, ResponseOutgoingFax>("outgoing-faxes", token, fax);
         }
 
         /// <summary>
