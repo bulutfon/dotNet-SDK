@@ -37,13 +37,18 @@ namespace Bulutfon.MVC4.Api {
 
             const string tokenKey = "?access_token=";
             using (WebClient client = new WebClient()) {
-                var value = JsonConvert.SerializeObject(data);
+                var settings = new JsonSerializerSettings();
+                settings.Formatting = Formatting.Indented;
+                settings.DefaultValueHandling = DefaultValueHandling.Ignore;
+                var value = JsonConvert.SerializeObject(data, Formatting.None);
                 var stream = new MemoryStream(Encoding.UTF8.GetBytes(value ?? ""));
-                var ret = client.UploadData(Endpoint + uri + tokenKey + token, stream.ToArray());
+                client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                client.Headers[HttpRequestHeader.ContentEncoding] = "UTF-8";
+                var ret = client.UploadString(Endpoint + uri + tokenKey + token, Encoding.UTF8.GetString(stream.ToArray()));
                 if (ret == null || ret.Length == 0) {
                     return null;
                 }
-                return JsonConvert.DeserializeObject<TResponse>(Encoding.ASCII.GetString(ret));
+                return JsonConvert.DeserializeObject<TResponse>(ret);
             }
         }
 

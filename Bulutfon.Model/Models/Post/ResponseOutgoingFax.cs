@@ -14,5 +14,6 @@ namespace Bulutfon.Model.Models.Post {
         public int recipient_count { get; set; }
         public string create_at { get; set; }
         public List<ResponseFaxRecipient> recipient { get; set; }
+        public string message { get; set; }
     }
 }
