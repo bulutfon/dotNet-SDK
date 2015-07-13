@@ -51,7 +51,7 @@ namespace Bulutfon.MVC4.Api {
         /// <param name="token">Access token</param>
         /// <param name="data">Veri (nesne)</param>
         /// <returns>Servisten dönen nesne</returns>
-        private static TResponse PostObject<TRequest, TResponse>(string uri, string token, TRequest data) 
+        public static TResponse PostObject<TRequest, TResponse>(string uri, string token, TRequest data) 
             where TRequest : class 
             where TResponse : class {
 
