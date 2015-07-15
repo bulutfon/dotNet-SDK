@@ -8,10 +8,16 @@ using Bulutfon.Model.Models.Post;
 using Bulutfon.MVC4.Api;
 using Mvc4Demo.Models;
 
-namespace Mvc4Demo.Controllers
-{
-    public class HomeController : Controller
-    {
+namespace Mvc4Demo.Controllers {
+
+    public class HomeController : Controller {
+
+        [Authorize]
+        public ActionResult Messages() {
+            var messages = BulutfonApi.GetMessages((TokenProvider)Session[BulutfonApi.TokenProviderKey]);
+            return View(messages);
+        }
+
         [Authorize]
         public ActionResult Did(string id) {
             var did = BulutfonApi.GetDid((TokenProvider)Session[BulutfonApi.TokenProviderKey], id);

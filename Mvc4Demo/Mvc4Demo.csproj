@@ -312,6 +312,7 @@
     <Content Include="Views\Home\OutgoingFaxes.cshtml" />
     <Content Include="Views\Home\OutgoingFax.cshtml" />
     <Content Include="Views\Home\UploadFax.cshtml" />
+    <Content Include="Views\Home\Messages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
