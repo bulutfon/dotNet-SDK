@@ -18,6 +18,8 @@ namespace Bulutfon.MVC4.Api {
     /// </summary>
     public static class BulutfonApi {
 
+        public const string TokenProviderKey = "token_provider";
+
         /// <summary>
         /// https://api.bulutfon.com/
         /// </summary>
@@ -28,20 +30,31 @@ namespace Bulutfon.MVC4.Api {
         /// </summary>
         /// <typeparam name="T">Nesne sınıfı</typeparam>
         /// <param name="uri">Adres</param>
-        /// <param name="token">Access token</param>
+        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="key">Id (opsiyonel)</param>
         /// <returns>Servisten dönen nesne</returns>
-        public static T GetObject<T>(string uri, string token, string key = "") where T : class {
+        public static T GetObject<T>(string uri, TokenProvider tokenProvider, string key = "") where T : class {
             const string tokenKey = "?access_token=";
-            using (WebClient client = new WebClient()) {
-                var keyValue = string.Empty;
-                if (!string.IsNullOrEmpty(key))
-                    keyValue = string.Format("/{0}", key);
-                string str = client.DownloadString(BaseUri + uri + keyValue + tokenKey + token);
-                if (string.IsNullOrEmpty(str)) {
-                    return null;
+            try {
+                using (WebClient client = new WebClient()) {
+                    var keyValue = string.Empty;
+                    if (!string.IsNullOrEmpty(key))
+                        keyValue = string.Format("/{0}", key);
+                    string str = client.DownloadString(BaseUri + uri + keyValue + tokenKey + tokenProvider.AccessToken);
+                    if (string.IsNullOrEmpty(str)) {
+                        return null;
+                    }
+                    return JsonConvert.DeserializeObject<T>(str);
                 }
-                return JsonConvert.DeserializeObject<T>(str);
+            }
+            catch (Exception e) {
+                if (e.Message.ToLower().Contains("expired")) {
+                    tokenProvider.RefreshAccessToken();
+                    return GetObject<T>(uri, tokenProvider, key);
+                }
+                else {
+                    throw e;
+                }
             }
         }
 
@@ -51,24 +64,35 @@ namespace Bulutfon.MVC4.Api {
         /// <typeparam name="TRequest">Request sınıfı</typeparam>
         /// <typeparam name="TResponse">Response sınıfı</typeparam>
         /// <param name="uri">Adres</param>
-        /// <param name="token">Access token</param>
+        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="data">Veri (nesne)</param>
         /// <returns>Servisten dönen nesne</returns>
-        public static TResponse PostObject<TRequest, TResponse>(string uri, string token, TRequest data) 
+        public static TResponse PostObject<TRequest, TResponse>(string uri, TokenProvider tokenProvider, TRequest data) 
             where TRequest : class 
             where TResponse : class {
 
             const string tokenKey = "?access_token=";
-            using (WebClient client = new WebClient()) {
-                var value = JsonConvert.SerializeObject(data, Formatting.None);
-                var stream = new MemoryStream(Encoding.UTF8.GetBytes(value ?? ""));
-                client.Headers[HttpRequestHeader.ContentType] = "application/json";
-                client.Headers[HttpRequestHeader.ContentEncoding] = "UTF-8";
-                var ret = client.UploadData(BaseUri + uri + tokenKey + token, stream.ToArray());
-                if (ret == null || ret.Length == 0) {
-                    return null;
+            try {
+                using (WebClient client = new WebClient()) {
+                    var value = JsonConvert.SerializeObject(data, Formatting.None);
+                    var stream = new MemoryStream(Encoding.UTF8.GetBytes(value ?? ""));
+                    client.Headers[HttpRequestHeader.ContentType] = "application/json";
+                    client.Headers[HttpRequestHeader.ContentEncoding] = "UTF-8";
+                    var ret = client.UploadData(BaseUri + uri + tokenKey + tokenProvider.AccessToken, stream.ToArray());
+                    if (ret == null || ret.Length == 0) {
+                        return null;
+                    }
+                    return JsonConvert.DeserializeObject<TResponse>(Encoding.UTF8.GetString(ret));
                 }
-                return JsonConvert.DeserializeObject<TResponse>(Encoding.UTF8.GetString(ret));
+            }
+            catch (Exception e) {
+                if (e.Message.ToLower().Contains("expired")) {
+                    tokenProvider.RefreshAccessToken();
+                    return PostObject<TRequest, TResponse>(uri, tokenProvider, data);
+                }
+                else {
+                    throw e;
+                }
             }
         }
 
@@ -89,7 +113,7 @@ namespace Bulutfon.MVC4.Api {
         /// <summary>
         /// Faks gönder
         /// </summary>
-        /// <param name="token">Acess token</param>
+        /// <param name="tokenProvider">Acess token</param>
         /// <param name="fileType">Dosya türü</param>
         /// <param name="fileName">Dosya adı</param>
         /// <param name="stream">Binary formatta dosya</param>
@@ -97,7 +121,7 @@ namespace Bulutfon.MVC4.Api {
         /// <param name="did">Gönderen</param>
         /// <param name="title">Başlık</param>
         /// <returns>Gönderim durumu</returns>
-        public static ResponseOutgoingFax SendFax(string token, string fileType, string fileName, Stream stream , 
+        public static ResponseOutgoingFax SendFax(TokenProvider tokenProvider, string fileType, string fileName, Stream stream , 
                                                   string receivers, long did, string title = "") {
             var fax = new RequestOutgoingFax() {
                 receivers = receivers,
@@ -105,230 +129,241 @@ namespace Bulutfon.MVC4.Api {
                 title = title,
                 attachment = GetAttachmentText(fileType, fileName, stream)
             };
-            return PostObject<RequestOutgoingFax, ResponseOutgoingFax>("outgoing-faxes", token, fax);
+            return PostObject<RequestOutgoingFax, ResponseOutgoingFax>("outgoing-faxes", tokenProvider, fax);
         }
 
         /// <summary>
         /// Faks gönder
         /// </summary>
-        /// <param name="token">Acess token</param>
+        /// <param name="tokenProvider">Acess token</param>
         /// <param name="file">Dosya</param>
         /// <param name="receivers">Alıcılar</param>
         /// <param name="did">Gönderen</param>
         /// <param name="title">Başlık</param>
         /// <returns>Gönderim durumu</returns>
-        public static ResponseOutgoingFax SendFax(string token, HttpPostedFileBase file, 
+        public static ResponseOutgoingFax SendFax(TokenProvider tokenProvider, HttpPostedFileBase file, 
                                                   string receivers, long did, string title = "") {
 
-            return SendFax(token, file.ContentType, Path.GetFileName(file.FileName), file.InputStream, receivers, did, title);
+            return SendFax(tokenProvider, file.ContentType, Path.GetFileName(file.FileName), file.InputStream, receivers, did, title);
         }
 
         /// <summary>
         /// Dosya indir
         /// </summary>
         /// <param name="uri">Adres</param>
-        /// <param name="token">Access token</param>
+        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="key">Id</param>
         /// <returns>Binary formatta dosya</returns>
-        public static byte[] GetStream(string uri, string token, string key = "") {
+        public static byte[] GetStream(string uri, TokenProvider tokenProvider, string key = "") {
             const string tokenKey = "?access_token=";
-            using (WebClient client = new WebClient()) {
-                var keyValue = string.Empty;
-                if (!string.IsNullOrEmpty(key))
-                    keyValue = string.Format("/{0}", key);
-                return client.DownloadData(BaseUri + uri + keyValue + tokenKey + token);
+            try {
+                using (WebClient client = new WebClient()) {
+                    var keyValue = string.Empty;
+                    if (!string.IsNullOrEmpty(key))
+                        keyValue = string.Format("/{0}", key);
+                    return client.DownloadData(BaseUri + uri + keyValue + tokenKey + tokenProvider.AccessToken);
+                }
+            }
+            catch (Exception e) {
+                if (e.Message.ToLower().Contains("expired")) {
+                    tokenProvider.RefreshAccessToken();
+                    return GetStream(uri, tokenProvider, key);
+                }
+                else {
+                    throw e;
+                }
             }
         }
 
         /// <summary>
         /// Anonslar
         /// </summary>
-        /// <param name="token">Access token</param>
+        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns>Anons listesi</returns>
-        public static List<Announcement> GetAnnouncements(string token) {
-            return GetObject<AnnouncementsResponse>("announcement", token).announcements;
+        public static List<Announcement> GetAnnouncements(TokenProvider tokenProvider) {
+            return GetObject<AnnouncementsResponse>("announcement", tokenProvider).announcements;
         }
 
         /// <summary>
         /// Otomatik aramalar
         /// </summary>
-        /// <param name="token">Access token</param>
+        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns>Otomatik aramalar</returns>
-        public static AutomaticCall GetAutomaticCall(string token) {
-            return GetObject<AutomaticCallResponse>("automatic-calls", token).automatic_call;
+        public static AutomaticCall GetAutomaticCall(TokenProvider tokenProvider) {
+            return GetObject<AutomaticCallResponse>("automatic-calls", tokenProvider).automatic_call;
         }
 
         /// <summary>
         /// Cdr'lar
         /// </summary>
-        /// <param name="token">Access token</param>
+        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns>Cdr listesi</returns>
-        public static List<Cdr> GetCdrs(string token) {
-            return GetObject<CdrsResponse>("cdrs", token).cdrs;
+        public static List<Cdr> GetCdrs(TokenProvider tokenProvider) {
+            return GetObject<CdrsResponse>("cdrs", tokenProvider).cdrs;
         }
 
         /// <summary>
         /// Cdr
         /// </summary>
-        /// <param name="token">Access token</param>
+        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="id">Cdr id</param>
         /// <returns>Cdr</returns>
-        public static Cdr GetCdr(string token, string id) {
-            return GetObject<CdrResponse>("cdrs", token, id).cdr;
+        public static Cdr GetCdr(TokenProvider tokenProvider, string id) {
+            return GetObject<CdrResponse>("cdrs", tokenProvider, id).cdr;
         }
 
         /// <summary>
         /// Did'ler
         /// </summary>
-        /// <param name="token">Access token</param>
+        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns>Did listesi</returns>
-        public static List<Did> GetDids(string token) {
-            return GetObject<DidsResponse>("dids", token).dids;
+        public static List<Did> GetDids(TokenProvider tokenProvider) {
+            return GetObject<DidsResponse>("dids", tokenProvider).dids;
         }
 
         /// <summary>
         /// Did
         /// </summary>
-        /// <param name="token">Access token</param>
+        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="id">Id</param>
         /// <returns>Did</returns>
-        public static Did GetDid(string token, string id) {
-            return GetObject<DidResponse>("dids", token, id).did;
+        public static Did GetDid(TokenProvider tokenProvider, string id) {
+            return GetObject<DidResponse>("dids", tokenProvider, id).did;
         }
 
         /// <summary>
         /// Extensions
         /// </summary>
-        /// <param name="token">Access token</param>
+        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns></returns>
-        public static List<Extension> GetExtensions(string token) {
-            return GetObject<ExtensionsResponse>("extensions", token).extensions;
+        public static List<Extension> GetExtensions(TokenProvider tokenProvider) {
+            return GetObject<ExtensionsResponse>("extensions", tokenProvider).extensions;
         }
 
         /// <summary>
         /// Extension
         /// </summary>
-        /// <param name="token">Access token</param>
+        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="id">Id</param>
         /// <returns>Extension</returns>
-        public static Extension GetExtension(string token, string id) {
-            return GetObject<ExtensionResponse>("extensions", token, id).extension;
+        public static Extension GetExtension(TokenProvider tokenProvider, string id) {
+            return GetObject<ExtensionResponse>("extensions", tokenProvider, id).extension;
         }
 
         /// <summary>
         /// Gruplar
         /// </summary>
-        /// <param name="token">Access token</param>
+        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns>Grup listesi</returns>
-        public static List<Group> GetGroups(string token) {
-            return GetObject<GroupsResponse>("groups", token).groups;
+        public static List<Group> GetGroups(TokenProvider tokenProvider) {
+            return GetObject<GroupsResponse>("groups", tokenProvider).groups;
         }
 
         /// <summary>
         /// Grup
         /// </summary>
-        /// <param name="token">Access token</param>
+        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="id">Id</param>
         /// <returns>Grup</returns>
-        public static Group GetGroup(string token, string id) {
-            return GetObject<GroupResponse>("groups", token, id).group;
+        public static Group GetGroup(TokenProvider tokenProvider, string id) {
+            return GetObject<GroupResponse>("groups", tokenProvider, id).group;
         }
 
         /// <summary>
         /// Gelen fakslar
         /// </summary>
-        /// <param name="token">Access token</param>
+        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns>Gelen faks listesi</returns>
-        public static List<IncomingFax> GetIncomingFaxes(string token) {
-            return GetObject<IncomingFaxesResponse>("incoming-faxes", token).incoming_faxes;
+        public static List<IncomingFax> GetIncomingFaxes(TokenProvider tokenProvider) {
+            return GetObject<IncomingFaxesResponse>("incoming-faxes", tokenProvider).incoming_faxes;
         }
 
         /// <summary>
         /// Gelen faks STREAM olarak
         /// </summary>
-        /// <param name="token">Access token</param>
+        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="id">Id</param>
         /// <returns>Stream olarak faks (TIFF)</returns>
-        public static Stream GetIncomingFaxStream(string token, string id) {
-            var data = GetStream("incoming-faxes", token, id);
+        public static Stream GetIncomingFaxStream(TokenProvider tokenProvider, string id) {
+            var data = GetStream("incoming-faxes", tokenProvider, id);
             return new MemoryStream(data);
         }
 
         /// <summary>
         /// Gelen faks TIFF olarak
         /// </summary>
-        /// <param name="token">Access token</param>
+        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="id">Id</param>
         /// <returns>Tiff nesnesi olarak gelen faks</returns>
-        public static Tiff GetIncomingFaxAsTiff(string token, string id) {
-            return Tiff.ClientOpen("in-memory", "r", GetIncomingFaxStream(token, id), new TiffStream());
+        public static Tiff GetIncomingFaxAsTiff(TokenProvider tokenProvider, string id) {
+            return Tiff.ClientOpen("in-memory", "r", GetIncomingFaxStream(tokenProvider, id), new TiffStream());
         }
 
         /// <summary>
         /// Gelen faksı dosya olarak indir (TIFF)
         /// Bu metot MVC4 projelerine yöneliktir
         /// </summary>
-        /// <param name="token">Access token</param>
+        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="id">Id</param>
         /// <returns>FileStreamResult olarak faks</returns>
-        public static FileStreamResult DownloadIncomingFaxAsTiff(string token, string id) {
-            return new FileStreamResult(GetIncomingFaxStream(token, id), "image/tiff");
+        public static FileStreamResult DownloadIncomingFaxAsTiff(TokenProvider tokenProvider, string id) {
+            return new FileStreamResult(GetIncomingFaxStream(tokenProvider, id), "image/tiff");
         }
 
         /// <summary>
         /// Kullanıcı bilgileri
         /// </summary>
-        /// <param name="token">Access token</param>
+        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns>Kullanıcı bilgileri</returns>
-        public static User GetUser(string token) {
-            return GetObject<MeResponse>("me", token).user;
+        public static User GetUser(TokenProvider tokenProvider) {
+            return GetObject<MeResponse>("me", tokenProvider).user;
         }
 
         /// <summary>
         /// PBX
         /// </summary>
-        /// <param name="token">Access token</param>
+        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns>PBX</returns>
-        public static Pbx GetPbx(string token) {
-            return GetObject<MeResponse>("me", token).pbx;
+        public static Pbx GetPbx(TokenProvider tokenProvider) {
+            return GetObject<MeResponse>("me", tokenProvider).pbx;
         }
 
         /// <summary>
         /// Mesajlar
         /// </summary>
-        /// <param name="token">Access token</param>
+        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns>Mesaj listesi</returns>
-        public static List<Message> GetMessages(string token) {
-            return GetObject<MessagesResponse>("messages", token).messages;
+        public static List<Message> GetMessages(TokenProvider tokenProvider) {
+            return GetObject<MessagesResponse>("messages", tokenProvider).messages;
         }
 
         /// <summary>
         /// Mesaj
         /// </summary>
-        /// <param name="token">Access token</param>
+        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="id">Id</param>
         /// <returns>Mesaj</returns>
-        public static Message GetMessage(string token, string id) {
-            return GetObject<MessageResponse>("messages", token, id).message;
+        public static Message GetMessage(TokenProvider tokenProvider, string id) {
+            return GetObject<MessageResponse>("messages", tokenProvider, id).message;
         }
 
         /// <summary>
         /// Gönderilen fakslar
         /// </summary>
-        /// <param name="token">Access token</param>
+        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns>Faks listesi</returns>
-        public static List<Fax> GetFaxes(string token) {
-            return GetObject<OutgoingFaxesResponse>("outgoing-faxes", token).faxes;
+        public static List<Fax> GetFaxes(TokenProvider tokenProvider) {
+            return GetObject<OutgoingFaxesResponse>("outgoing-faxes", tokenProvider).faxes;
         }
 
         /// <summary>
         /// Gönderilmiş faks
         /// </summary>
-        /// <param name="token">Access token</param>
+        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="id">Id</param>
         /// <returns>Faks</returns>
-        public static Fax GetFax(string token, string id) {
-            return GetObject<OutgoingFaxResponse>("outgoing-faxes", token, id).fax;
+        public static Fax GetFax(TokenProvider tokenProvider, string id) {
+            return GetObject<OutgoingFaxResponse>("outgoing-faxes", tokenProvider, id).fax;
         }
     }
 }

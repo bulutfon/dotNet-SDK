@@ -14,36 +14,36 @@ namespace Mvc4Demo.Controllers
     {
         [Authorize]
         public ActionResult Did(string id) {
-            var did = BulutfonApi.GetDid(Session["token"].ToString(), id);
+            var did = BulutfonApi.GetDid((TokenProvider)Session[BulutfonApi.TokenProviderKey], id);
             return View(did);
         }
 
         [Authorize]
         public ActionResult Dids() {
-            var dids = BulutfonApi.GetDids(Session["token"].ToString());
+            var dids = BulutfonApi.GetDids((TokenProvider)Session[BulutfonApi.TokenProviderKey]);
             return View(dids);
         }
 
         [Authorize]
         public ActionResult IncomingFaxes() {
-            var faxes = BulutfonApi.GetIncomingFaxes(Session["token"].ToString());
+            var faxes = BulutfonApi.GetIncomingFaxes((TokenProvider)Session[BulutfonApi.TokenProviderKey]);
             return View(faxes);
         }
 
         [Authorize]
         public ActionResult DownloadFax(string id) {
-            return BulutfonApi.DownloadIncomingFaxAsTiff(Session["token"].ToString(), id);
+            return BulutfonApi.DownloadIncomingFaxAsTiff((TokenProvider)Session[BulutfonApi.TokenProviderKey], id);
         }
 
         [Authorize]
         public ActionResult OutgoingFaxes() {
-            var faxes = BulutfonApi.GetFaxes(Session["token"].ToString());
+            var faxes = BulutfonApi.GetFaxes((TokenProvider)Session[BulutfonApi.TokenProviderKey]);
             return View(faxes);
         }
 
         [Authorize]
         public ActionResult OutgoingFax(string id) {
-            var fax = BulutfonApi.GetFax(Session["token"].ToString(), id);
+            var fax = BulutfonApi.GetFax((TokenProvider)Session[BulutfonApi.TokenProviderKey], id);
             return View(fax);
         }
 
@@ -57,7 +57,7 @@ namespace Mvc4Demo.Controllers
         [HttpPost]
         public ActionResult UploadFax(OutgoingFaxForm outgoingFax) {
             if (outgoingFax.attachment != null && outgoingFax.attachment.ContentLength > 0) {
-                /*var ret =*/ BulutfonApi.SendFax(Session["token"].ToString(), 
+                /*var ret =*/ BulutfonApi.SendFax((TokenProvider)Session[BulutfonApi.TokenProviderKey], 
                     outgoingFax.attachment, // faks dosyası
                     outgoingFax.receivers, // alıcılar
                     outgoingFax.did, // gönderen numara

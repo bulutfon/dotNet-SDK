@@ -6,6 +6,7 @@ namespace Mvc4Demo.Models {
     /// Faks gönderim formu için model
     /// </summary>
     public class OutgoingFaxForm {
+
         public string title { get; set; }
         public string receivers { get; set; }
         public long did { get; set; }

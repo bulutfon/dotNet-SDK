@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Web;
+using Bulutfon.MVC4.Api;
 using DotNetOpenAuth.AspNet;
 using DotNetOpenAuth.AspNet.Clients;
 using DotNetOpenAuth.Messaging;
@@ -96,19 +97,76 @@ namespace Bulutfon.MVC4.OAuth {
             }
         }
 
+        private TokenProvider QueryAccessTokens(Uri returnUrl, string authorizationCode) {
+            var dic = new Dictionary<string, string>();
+            dic.Add("client_id", this.ClientId);
+            dic.Add("redirect_uri", returnUrl.AbsoluteUri);
+            dic.Add("client_secret", this.ClientSecret);
+            dic.Add("code", authorizationCode);
+            dic.Add("scope", "cdr");
+            dic.Add("grant_type", "authorization_code");
+            
+            string postData = "";
+            string postDataSperator = "";
+            foreach(var i in dic) {
+                postData += string.Format("{0}{1}={2}", 
+                    postDataSperator, HttpUtility.UrlEncode(i.Key), HttpUtility.UrlEncode(i.Value));
+                postDataSperator = "&";
+            }
+            using (WebClient client = new WebClient()) {
+                string str = client.UploadString(TokenEndpoint, postData);
+                if (string.IsNullOrEmpty(str)) {
+                    return null;
+                }
+                JObject JSonResult = JObject.Parse(str);
+
+                var tokenProvider = new TokenProvider(
+                    JSonResult.GetValue("access_token").ToString(), JSonResult.GetValue("refresh_token").ToString());
+
+                tokenProvider.TokenExpired += tokenProvider_TokenExpired;
+
+                return tokenProvider;
+            }
+        }
+
+        void tokenProvider_TokenExpired(object s, TokenExpiredEventArgs e) {
+            var dic = new Dictionary<string, string>();
+            dic.Add("client_id", this.ClientId);
+            dic.Add("client_secret", this.ClientSecret);
+            dic.Add("refresh_token", e.RefreshToken);
+            dic.Add("scope", "cdr");
+            dic.Add("grant_type", "refresh_token");
+            
+            string postData = "";
+            string postDataSperator = "";
+            foreach(var i in dic) {
+                postData += string.Format("{0}{1}={2}", 
+                    postDataSperator, HttpUtility.UrlEncode(i.Key), HttpUtility.UrlEncode(i.Value));
+                postDataSperator = "&";
+            }
+            using (WebClient client = new WebClient()) {
+                string str = client.UploadString(TokenEndpoint, postData);
+                if (string.IsNullOrEmpty(str)) {
+                    return;
+                }
+                JObject JSonResult = JObject.Parse(str);
+                ((TokenProvider)s).AccessToken = JSonResult.GetValue("access_token").ToString();
+            }
+        }
+
         public override AuthenticationResult VerifyAuthentication(HttpContextBase context, Uri returnPageUrl) {
             string code = context.Request.QueryString["code"];
             if (string.IsNullOrEmpty(code))
                 return AuthenticationResult.Failed;
 
-            string accessToken = this.QueryAccessToken(returnPageUrl, code);
+            var tokenProvider = this.QueryAccessTokens(returnPageUrl, code);
 
-            context.Session["token"] = accessToken;
+            context.Session[BulutfonApi.TokenProviderKey] = tokenProvider;
 
-            if (accessToken == null)
+            if (tokenProvider == null || tokenProvider.AccessToken == null)
                 return AuthenticationResult.Failed;
 
-            IDictionary<string, string> userData = this.GetUserData(accessToken);
+            IDictionary<string, string> userData = this.GetUserData(tokenProvider.AccessToken);
             if (userData == null)
                 return AuthenticationResult.Failed;
 

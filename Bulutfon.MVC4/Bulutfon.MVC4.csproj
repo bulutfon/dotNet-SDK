@@ -107,6 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\BulutfonApi.cs" />
+    <Compile Include="Api\TokenProvider.cs" />
     <Compile Include="OAuth\BulutfonClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
