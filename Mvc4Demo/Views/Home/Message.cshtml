@@ -1,0 +1,49 @@
+﻿@model Bulutfon.Model.Models.Message
+
+@{
+    ViewBag.Title = "Message";
+}
+
+<h2>Message</h2>
+
+<fieldset>
+    <legend>Message</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.title)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.title)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.content)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.content)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.created_at)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.created_at)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.sent_as_single_sms)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.sent_as_single_sms)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.is_planned_sms)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.is_planned_sms)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("< Mesaj Listesine Dön", "Messages")
+</p>

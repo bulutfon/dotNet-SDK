@@ -18,6 +18,22 @@ namespace Mvc4Demo.Controllers {
             return View(messages);
         }
 
+        public ActionResult Message(string id) {
+            var message = BulutfonApi.GetMessage((TokenProvider)Session[BulutfonApi.TokenProviderKey], id);
+            return View(message);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult SendSms() {
+            return View();
+        }
+
+        public ActionResult SendSms(RequestSendMessage message) {
+            //TODO
+            return null;
+        }
+
         [Authorize]
         public ActionResult Did(string id) {
             var did = BulutfonApi.GetDid((TokenProvider)Session[BulutfonApi.TokenProviderKey], id);

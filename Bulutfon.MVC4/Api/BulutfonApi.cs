@@ -74,7 +74,10 @@ namespace Bulutfon.MVC4.Api {
             const string tokenKey = "?access_token=";
             try {
                 using (WebClient client = new WebClient()) {
-                    var value = JsonConvert.SerializeObject(data, Formatting.None);
+                    var settings = new JsonSerializerSettings() {
+                        DateFormatHandling = DateFormatHandling.MicrosoftDateFormat //DateFormatHandling.IsoDateFormat?
+                    };
+                    var value = JsonConvert.SerializeObject(data, Formatting.None, settings);
                     var stream = new MemoryStream(Encoding.UTF8.GetBytes(value ?? ""));
                     client.Headers[HttpRequestHeader.ContentType] = "application/json";
                     client.Headers[HttpRequestHeader.ContentEncoding] = "UTF-8";
@@ -130,6 +133,24 @@ namespace Bulutfon.MVC4.Api {
                 attachment = GetAttachmentText(fileType, fileName, stream)
             };
             return PostObject<RequestOutgoingFax, ResponseOutgoingFax>("outgoing-faxes", tokenProvider, fax);
+        }
+
+        public static ResponseSendMessage SendSms(TokenProvider tokenProvider, RequestSendMessage message) {
+            return PostObject<RequestSendMessage, ResponseSendMessage>("messages", tokenProvider, message);
+        }
+
+        public static ResponseSendMessage SendSms(TokenProvider tokenProvider,
+            string msgTitle, string msgReceivers, string msgContent, bool isSingleSms, bool isFutureSms, DateTime sendDate) {
+
+            var message = new RequestSendMessage() {
+                title = msgTitle,
+                receivers = msgReceivers,
+                content = msgContent,
+                is_single_sms = isSingleSms,
+                is_future_sms = isFutureSms//,
+                //send_date = sendDate
+            };
+            return SendSms(tokenProvider, message);
         }
 
         /// <summary>

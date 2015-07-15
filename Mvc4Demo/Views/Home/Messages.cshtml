@@ -47,9 +47,7 @@
             @Html.DisplayFor(modelItem => item.is_planned_sms)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+            @Html.ActionLink("Ayrıntılar", "Message", new { id=item.id }) 
         </td>
     </tr>
 }

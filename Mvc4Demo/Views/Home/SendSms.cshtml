@@ -1,0 +1,80 @@
+﻿@model Bulutfon.Model.Models.Post.RequestSendMessage
+
+@{
+    ViewBag.Title = "SendSms";
+}
+
+<h2>SendSms</h2>
+
+<p>
+    @Html.ActionLink("SMS Gönder", "SendSms")
+</p>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>RequestSendMessage</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.title)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.title)
+            @Html.ValidationMessageFor(model => model.title)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.receivers)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.receivers)
+            @Html.ValidationMessageFor(model => model.receivers)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.content)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.content)
+            @Html.ValidationMessageFor(model => model.content)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.is_single_sms)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.is_single_sms)
+            @Html.ValidationMessageFor(model => model.is_single_sms)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.is_future_sms)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.is_future_sms)
+            @Html.ValidationMessageFor(model => model.is_future_sms)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.send_date)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.send_date)
+            @Html.ValidationMessageFor(model => model.send_date)
+        </div>
+
+        <p>
+            <input type="submit" value="SendSms" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("< Mesaj Listesine Geri Dön", "Messages")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
