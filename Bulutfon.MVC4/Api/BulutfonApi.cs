@@ -116,7 +116,7 @@ namespace Bulutfon.MVC4.Api {
         /// <summary>
         /// Faks gönder
         /// </summary>
-        /// <param name="tokenProvider">Acess token</param>
+        /// <param name="tokenProvider">Access token</param>
         /// <param name="fileType">Dosya türü</param>
         /// <param name="fileName">Dosya adı</param>
         /// <param name="stream">Binary formatta dosya</param>
@@ -135,10 +135,27 @@ namespace Bulutfon.MVC4.Api {
             return PostObject<RequestOutgoingFax, ResponseOutgoingFax>("outgoing-faxes", tokenProvider, fax);
         }
 
+        /// <summary>
+        /// SMS Gönder
+        /// </summary>
+        /// <param name="tokenProvider">Access token</param>
+        /// <param name="message">Mesaj nesnesi</param>
+        /// <returns>Gönderim durumu</returns>
         public static ResponseSendMessage SendSms(TokenProvider tokenProvider, RequestSendMessage message) {
             return PostObject<RequestSendMessage, ResponseSendMessage>("messages", tokenProvider, message);
         }
 
+        /// <summary>
+        /// SMS Gönder
+        /// </summary>
+        /// <param name="tokenProvider">Access token</param>
+        /// <param name="msgTitle">Başlık</param>
+        /// <param name="msgReceivers">Alıcılar</param>
+        /// <param name="msgContent">İçerik (mesaj metni)</param>
+        /// <param name="isSingleSms">Tek SMS'te birleştirilsin mi?</param>
+        /// <param name="isFutureSms">Sonra gönderilsin</param>
+        /// <param name="sendDate">Gönderim tarihi (sonra gönderilecekse)</param>
+        /// <returns>Gönderim durumu</returns>
         public static ResponseSendMessage SendSms(TokenProvider tokenProvider,
             string msgTitle, string msgReceivers, string msgContent, bool isSingleSms, bool isFutureSms, DateTime sendDate) {
 
