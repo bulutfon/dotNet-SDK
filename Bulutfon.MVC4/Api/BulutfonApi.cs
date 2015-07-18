@@ -26,6 +26,14 @@ namespace Bulutfon.MVC4.Api {
         public const string BaseUri = "https://api.bulutfon.com/";
 
         /// <summary>
+        /// JSON serialize/deserialize ayarları
+        /// </summary>
+        /// <returns>JsonSerializerSettings</returns>
+        private static JsonSerializerSettings SerializerSettings() { 
+            return new JsonSerializerSettings() { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat };
+        }
+
+        /// <summary>
         /// GET (REST)
         /// </summary>
         /// <typeparam name="T">Nesne sınıfı</typeparam>
@@ -44,7 +52,7 @@ namespace Bulutfon.MVC4.Api {
                     if (string.IsNullOrEmpty(str)) {
                         return null;
                     }
-                    return JsonConvert.DeserializeObject<T>(str);
+                    return JsonConvert.DeserializeObject<T>(str, SerializerSettings());
                 }
             }
             catch (Exception e) {
@@ -74,10 +82,7 @@ namespace Bulutfon.MVC4.Api {
             const string tokenKey = "?access_token=";
             try {
                 using (WebClient client = new WebClient()) {
-                    var settings = new JsonSerializerSettings() {
-                        DateFormatHandling = DateFormatHandling.MicrosoftDateFormat //DateFormatHandling.IsoDateFormat?
-                    };
-                    var value = JsonConvert.SerializeObject(data, Formatting.None, settings);
+                    var value = JsonConvert.SerializeObject(data, Formatting.None, SerializerSettings());
                     var stream = new MemoryStream(Encoding.UTF8.GetBytes(value ?? ""));
                     client.Headers[HttpRequestHeader.ContentType] = "application/json";
                     client.Headers[HttpRequestHeader.ContentEncoding] = "UTF-8";
@@ -85,7 +90,7 @@ namespace Bulutfon.MVC4.Api {
                     if (ret == null || ret.Length == 0) {
                         return null;
                     }
-                    return JsonConvert.DeserializeObject<TResponse>(Encoding.UTF8.GetString(ret));
+                    return JsonConvert.DeserializeObject<TResponse>(Encoding.UTF8.GetString(ret), SerializerSettings());
                 }
             }
             catch (Exception e) {
