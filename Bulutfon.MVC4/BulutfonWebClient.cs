@@ -13,34 +13,15 @@ namespace Bulutfon.OAuth.Mvc {
     /// <summary>
     /// Bulutfon OAuth Client
     /// </summary>
-    public class BulutfonClient : OAuth2Client {
+    public class BulutfonWebClient : OAuth2Client {
 
-        #region Sabitler ve alanlar
+        protected string ClientId { get; private set; }
+        protected string ClientSecret { get; private set; }
 
-        /// <summary>
-        /// Authorization endpoint.
-        /// </summary>
-        private const string AuthorizationEndpoint = "https://www.bulutfon.com/oauth/authorize";
-
-        /// <summary>
-        /// Token endpoint.
-        /// </summary>
-        private const string TokenEndpoint = "https://www.bulutfon.com/oauth/token";
-
-        /// <summary>
-        /// User info endpoint.
-        /// </summary>
-        private const string UserDetailsEndPoint = "https://api.bulutfon.com/me";
-
-        #endregion
-
-        public string ClientId {get; private set;}
-        public string ClientSecret {get; private set;}
-
-        public BulutfonClient(string clientId, string clientSecret) : this("Bulutfon", clientId, clientSecret) {
+        public BulutfonWebClient(string clientId, string clientSecret) : this("Bulutfon", clientId, clientSecret) {
         }
 
-        protected BulutfonClient(string providerName, string clientId, string clientSecret) : base(providerName) {
+        protected BulutfonWebClient(string providerName, string clientId, string clientSecret) : base(providerName) {
             if (string.IsNullOrWhiteSpace(clientId) || string.IsNullOrWhiteSpace(clientSecret))
                 throw new ArgumentNullException("client id ya da client secret belirtilmemiş!");
             this.ClientId = clientId;
@@ -48,7 +29,7 @@ namespace Bulutfon.OAuth.Mvc {
         }
         
         protected override Uri GetServiceLoginUrl(Uri returnUrl) {
-            var builder = new UriBuilder(AuthorizationEndpoint);
+            var builder = new UriBuilder(Endpoints.Authorization);
             builder.AppendQueryArgument("response_type", "code");
             builder.AppendQueryArgument("client_id", this.ClientId);
             builder.AppendQueryArgument("redirect_uri", returnUrl.AbsoluteUri);
@@ -58,7 +39,7 @@ namespace Bulutfon.OAuth.Mvc {
         protected override IDictionary<string, string> GetUserData(string accessToken) {
             const string args = "?access_token=";
             using (WebClient client = new WebClient()) {
-                string str = client.DownloadString(UserDetailsEndPoint + args + accessToken);
+                string str = client.DownloadString(Endpoints.UserDetails + args + accessToken);
                 if (string.IsNullOrEmpty(str)) {
                     return null;
                 }
@@ -87,7 +68,7 @@ namespace Bulutfon.OAuth.Mvc {
                 postDataSperator = "&";
             }
             using (WebClient client = new WebClient()) {
-                string str = client.UploadString(TokenEndpoint, postData);
+                string str = client.UploadString(Endpoints.Token, postData);
                 if (string.IsNullOrEmpty(str)) {
                     return null;
                 }
@@ -96,7 +77,7 @@ namespace Bulutfon.OAuth.Mvc {
             }
         }
 
-        private TokenProvider QueryAccessTokens(Uri returnUrl, string authorizationCode) {
+        private Token QueryAccessTokens(Uri returnUrl, string authorizationCode) {
             var dic = new Dictionary<string, string>();
             dic.Add("client_id", this.ClientId);
             dic.Add("redirect_uri", returnUrl.AbsoluteUri);
@@ -113,13 +94,13 @@ namespace Bulutfon.OAuth.Mvc {
                 postDataSperator = "&";
             }
             using (WebClient client = new WebClient()) {
-                string str = client.UploadString(TokenEndpoint, postData);
+                string str = client.UploadString(Endpoints.Token, postData);
                 if (string.IsNullOrEmpty(str)) {
                     return null;
                 }
                 JObject JSonResult = JObject.Parse(str);
 
-                var tokenProvider = new TokenProvider(
+                var tokenProvider = new Token(
                     JSonResult.GetValue("access_token").ToString(), JSonResult.GetValue("refresh_token").ToString());
 
                 tokenProvider.TokenExpired += tokenProvider_TokenExpired;
@@ -144,12 +125,12 @@ namespace Bulutfon.OAuth.Mvc {
                 postDataSperator = "&";
             }
             using (WebClient client = new WebClient()) {
-                string str = client.UploadString(TokenEndpoint, postData);
+                string str = client.UploadString(Endpoints.Token, postData);
                 if (string.IsNullOrEmpty(str)) {
                     return;
                 }
                 JObject JSonResult = JObject.Parse(str);
-                ((TokenProvider)s).AccessToken = JSonResult.GetValue("access_token").ToString();
+                ((Token)s).AccessToken = JSonResult.GetValue("access_token").ToString();
             }
         }
 
@@ -160,7 +141,7 @@ namespace Bulutfon.OAuth.Mvc {
 
             var tokenProvider = this.QueryAccessTokens(returnPageUrl, code);
 
-            context.Session[TokenProvider.Key] = tokenProvider;
+            context.Session[Token.Key] = tokenProvider;
 
             if (tokenProvider == null || tokenProvider.AccessToken == null)
                 return AuthenticationResult.Failed;

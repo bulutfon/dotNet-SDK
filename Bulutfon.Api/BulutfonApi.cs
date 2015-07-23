@@ -40,7 +40,7 @@ namespace Bulutfon.Sdk {
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="key">Id (opsiyonel)</param>
         /// <returns>Servisten dönen nesne</returns>
-        public static T GetObject<T>(string uri, TokenProvider tokenProvider, string key = "") where T : class {
+        public static T GetObject<T>(string uri, Token tokenProvider, string key = "") where T : class {
             const string tokenKey = "?access_token=";
             try {
                 using (WebClient client = new WebClient()) {
@@ -74,7 +74,7 @@ namespace Bulutfon.Sdk {
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="data">Veri (nesne)</param>
         /// <returns>Servisten dönen nesne</returns>
-        public static TResponse PostObject<TRequest, TResponse>(string uri, TokenProvider tokenProvider, TRequest data) 
+        public static TResponse PostObject<TRequest, TResponse>(string uri, Token tokenProvider, TRequest data) 
             where TRequest : class 
             where TResponse : class {
 
@@ -128,7 +128,7 @@ namespace Bulutfon.Sdk {
         /// <param name="did">Gönderen</param>
         /// <param name="title">Başlık</param>
         /// <returns>Gönderim durumu</returns>
-        public static Bulutfon.Sdk.Models.Post.ResponseOutgoingFax SendFax(TokenProvider tokenProvider, string fileType, string fileName, Stream stream , 
+        public static Bulutfon.Sdk.Models.Post.ResponseOutgoingFax SendFax(Token tokenProvider, string fileType, string fileName, Stream stream , 
                                                   string receivers, long did, string title = "") {
             var fax = new Bulutfon.Sdk.Models.Post.RequestOutgoingFax() {
                 receivers = receivers,
@@ -145,7 +145,7 @@ namespace Bulutfon.Sdk {
         /// <param name="tokenProvider">Access token</param>
         /// <param name="message">Mesaj nesnesi</param>
         /// <returns>Gönderim durumu</returns>
-        public static Bulutfon.Sdk.Models.Post.ResponseSendMessage SendSms(TokenProvider tokenProvider, Bulutfon.Sdk.Models.Post.RequestSendMessage message) {
+        public static Bulutfon.Sdk.Models.Post.ResponseSendMessage SendSms(Token tokenProvider, Bulutfon.Sdk.Models.Post.RequestSendMessage message) {
             return PostObject<Bulutfon.Sdk.Models.Post.RequestSendMessage, Bulutfon.Sdk.Models.Post.ResponseSendMessage>("messages", tokenProvider, message);
         }
 
@@ -160,7 +160,7 @@ namespace Bulutfon.Sdk {
         /// <param name="isFutureSms">Sonra gönderilsin</param>
         /// <param name="sendDate">Gönderim tarihi (sonra gönderilecekse)</param>
         /// <returns>Gönderim durumu</returns>
-        public static Bulutfon.Sdk.Models.Post.ResponseSendMessage SendSms(TokenProvider tokenProvider,
+        public static Bulutfon.Sdk.Models.Post.ResponseSendMessage SendSms(Token tokenProvider,
             string msgTitle, string msgReceivers, string msgContent, bool isSingleSms, bool isFutureSms, DateTime sendDate) {
 
             var message = new Bulutfon.Sdk.Models.Post.RequestSendMessage() {
@@ -183,7 +183,7 @@ namespace Bulutfon.Sdk {
         /// <param name="did">Gönderen</param>
         /// <param name="title">Başlık</param>
         /// <returns>Gönderim durumu</returns>
-        public static Bulutfon.Sdk.Models.Post.ResponseOutgoingFax SendFax(TokenProvider tokenProvider, HttpPostedFileBase file, 
+        public static Bulutfon.Sdk.Models.Post.ResponseOutgoingFax SendFax(Token tokenProvider, HttpPostedFileBase file, 
                                                   string receivers, long did, string title = "") {
 
             return SendFax(tokenProvider, file.ContentType, Path.GetFileName(file.FileName), file.InputStream, receivers, did, title);
@@ -196,7 +196,7 @@ namespace Bulutfon.Sdk {
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="key">Id</param>
         /// <returns>Binary formatta dosya</returns>
-        public static byte[] GetStream(string uri, TokenProvider tokenProvider, string key = "") {
+        public static byte[] GetStream(string uri, Token tokenProvider, string key = "") {
             const string tokenKey = "?access_token=";
             try {
                 using (WebClient client = new WebClient()) {
@@ -222,7 +222,7 @@ namespace Bulutfon.Sdk {
         /// </summary>
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns>Anons listesi</returns>
-        public static List<Bulutfon.Sdk.Models.Announcement> GetAnnouncements(TokenProvider tokenProvider) {
+        public static List<Bulutfon.Sdk.Models.Announcement> GetAnnouncements(Token tokenProvider) {
             return GetObject<Bulutfon.Sdk.Models.ResponseObjects.AnnouncementsResponse>("announcement", tokenProvider).announcements;
         }
 
@@ -231,7 +231,7 @@ namespace Bulutfon.Sdk {
         /// </summary>
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns>Otomatik aramalar</returns>
-        public static AutomaticCall GetAutomaticCall(TokenProvider tokenProvider) {
+        public static AutomaticCall GetAutomaticCall(Token tokenProvider) {
             return GetObject<AutomaticCallResponse>("automatic-calls", tokenProvider).automatic_call;
         }
 
@@ -240,7 +240,7 @@ namespace Bulutfon.Sdk {
         /// </summary>
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns>Cdr listesi</returns>
-        public static List<Cdr> GetCdrs(TokenProvider tokenProvider) {
+        public static List<Cdr> GetCdrs(Token tokenProvider) {
             return GetObject<CdrsResponse>("cdrs", tokenProvider).cdrs;
         }
 
@@ -250,7 +250,7 @@ namespace Bulutfon.Sdk {
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="id">Cdr id</param>
         /// <returns>Cdr</returns>
-        public static Cdr GetCdr(TokenProvider tokenProvider, string id) {
+        public static Cdr GetCdr(Token tokenProvider, string id) {
             return GetObject<CdrResponse>("cdrs", tokenProvider, id).cdr;
         }
 
@@ -259,7 +259,7 @@ namespace Bulutfon.Sdk {
         /// </summary>
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns>Did listesi</returns>
-        public static List<Did> GetDids(TokenProvider tokenProvider) {
+        public static List<Did> GetDids(Token tokenProvider) {
             return GetObject<DidsResponse>("dids", tokenProvider).dids;
         }
 
@@ -269,7 +269,7 @@ namespace Bulutfon.Sdk {
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="id">Id</param>
         /// <returns>Did</returns>
-        public static Did GetDid(TokenProvider tokenProvider, string id) {
+        public static Did GetDid(Token tokenProvider, string id) {
             return GetObject<DidResponse>("dids", tokenProvider, id).did;
         }
 
@@ -278,7 +278,7 @@ namespace Bulutfon.Sdk {
         /// </summary>
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns></returns>
-        public static List<Extension> GetExtensions(TokenProvider tokenProvider) {
+        public static List<Extension> GetExtensions(Token tokenProvider) {
             return GetObject<ExtensionsResponse>("extensions", tokenProvider).extensions;
         }
 
@@ -288,7 +288,7 @@ namespace Bulutfon.Sdk {
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="id">Id</param>
         /// <returns>Extension</returns>
-        public static Extension GetExtension(TokenProvider tokenProvider, string id) {
+        public static Extension GetExtension(Token tokenProvider, string id) {
             return GetObject<ExtensionResponse>("extensions", tokenProvider, id).extension;
         }
 
@@ -297,7 +297,7 @@ namespace Bulutfon.Sdk {
         /// </summary>
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns>Grup listesi</returns>
-        public static List<Group> GetGroups(TokenProvider tokenProvider) {
+        public static List<Group> GetGroups(Token tokenProvider) {
             return GetObject<GroupsResponse>("groups", tokenProvider).groups;
         }
 
@@ -307,7 +307,7 @@ namespace Bulutfon.Sdk {
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="id">Id</param>
         /// <returns>Grup</returns>
-        public static Group GetGroup(TokenProvider tokenProvider, string id) {
+        public static Group GetGroup(Token tokenProvider, string id) {
             return GetObject<GroupResponse>("groups", tokenProvider, id).group;
         }
 
@@ -316,7 +316,7 @@ namespace Bulutfon.Sdk {
         /// </summary>
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns>Gelen faks listesi</returns>
-        public static List<IncomingFax> GetIncomingFaxes(TokenProvider tokenProvider) {
+        public static List<IncomingFax> GetIncomingFaxes(Token tokenProvider) {
             return GetObject<IncomingFaxesResponse>("incoming-faxes", tokenProvider).incoming_faxes;
         }
 
@@ -326,7 +326,7 @@ namespace Bulutfon.Sdk {
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="id">Id</param>
         /// <returns>Stream olarak faks (TIFF)</returns>
-        public static Stream GetIncomingFaxStream(TokenProvider tokenProvider, string id) {
+        public static Stream GetIncomingFaxStream(Token tokenProvider, string id) {
             var data = GetStream("incoming-faxes", tokenProvider, id);
             return new MemoryStream(data);
         }
@@ -337,7 +337,7 @@ namespace Bulutfon.Sdk {
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="id">Id</param>
         /// <returns>Tiff nesnesi olarak gelen faks</returns>
-        public static Tiff GetIncomingFaxAsTiff(TokenProvider tokenProvider, string id) {
+        public static Tiff GetIncomingFaxAsTiff(Token tokenProvider, string id) {
             return Tiff.ClientOpen("in-memory", "r", GetIncomingFaxStream(tokenProvider, id), new TiffStream());
         }
 
@@ -357,7 +357,7 @@ namespace Bulutfon.Sdk {
         /// </summary>
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns>Kullanıcı bilgileri</returns>
-        public static User GetUser(TokenProvider tokenProvider) {
+        public static User GetUser(Token tokenProvider) {
             return GetObject<MeResponse>("me", tokenProvider).user;
         }
 
@@ -366,7 +366,7 @@ namespace Bulutfon.Sdk {
         /// </summary>
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns>PBX</returns>
-        public static Pbx GetPbx(TokenProvider tokenProvider) {
+        public static Pbx GetPbx(Token tokenProvider) {
             return GetObject<MeResponse>("me", tokenProvider).pbx;
         }
 
@@ -375,7 +375,7 @@ namespace Bulutfon.Sdk {
         /// </summary>
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns>Mesaj listesi</returns>
-        public static List<Bulutfon.Api.Models.Message> GetMessages(TokenProvider tokenProvider) {
+        public static List<Bulutfon.Api.Models.Message> GetMessages(Token tokenProvider) {
             return GetObject<MessagesResponse>("messages", tokenProvider).messages;
         }
 
@@ -385,7 +385,7 @@ namespace Bulutfon.Sdk {
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="id">Id</param>
         /// <returns>Mesaj</returns>
-        public static Bulutfon.Api.Models.Message GetMessage(TokenProvider tokenProvider, string id) {
+        public static Bulutfon.Api.Models.Message GetMessage(Token tokenProvider, string id) {
             return GetObject<MessageResponse>("messages", tokenProvider, id).message;
         }
 
@@ -394,7 +394,7 @@ namespace Bulutfon.Sdk {
         /// </summary>
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns>Faks listesi</returns>
-        public static List<Fax> GetFaxes(TokenProvider tokenProvider) {
+        public static List<Fax> GetFaxes(Token tokenProvider) {
             return GetObject<OutgoingFaxesResponse>("outgoing-faxes", tokenProvider).faxes;
         }
 
@@ -404,7 +404,7 @@ namespace Bulutfon.Sdk {
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="id">Id</param>
         /// <returns>Faks</returns>
-        public static Fax GetFax(TokenProvider tokenProvider, string id) {
+        public static Fax GetFax(Token tokenProvider, string id) {
             return GetObject<OutgoingFaxResponse>("outgoing-faxes", tokenProvider, id).fax;
         }
     }

@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bulutfon.MVC3", "Bulutfon\Bulutfon.MVC3.csproj", "{823B2800-7654-42A8-88E6-A4FBF45CFAAB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebTest", "WebTest", "{0D93F0C8-11D5-482E-91DB-10FE39A82550}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebDemo", "WebDemo", "{0D93F0C8-11D5-482E-91DB-10FE39A82550}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bulutfon.OAuth.Mvc", "Bulutfon.MVC4\Bulutfon.OAuth.Mvc.csproj", "{A022F8DD-6C5F-4005-8D5B-546093A71B3F}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bulutfon.Sdk", "Bulutfon.Api\Bulutfon.Sdk.csproj", "{4F5173B4-86F2-4705-95F2-42252BF5CDE1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bulutfon.OAuth.Win", "Bulutfon.OAuth.Win\Bulutfon.OAuth.Win.csproj", "{0E4A8084-2CCC-4020-9F3F-26186DCC5CE1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WinDemo", "WinDemo", "{D2757C38-6411-482A-8629-E7EE830FCB24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

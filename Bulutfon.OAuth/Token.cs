@@ -2,11 +2,14 @@
 
 namespace Bulutfon.OAuth {
 
-    public class TokenProvider {
+    /// <summary>
+    /// Access Token ve Refresh Token
+    /// </summary>
+    public class Token {
 
-        public const string Key = "token_provider";
+        public const string Key = "_tokens_";
 
-        public TokenProvider(string accesToken, string refreshToken) {
+        public Token(string accesToken, string refreshToken) {
             AccessToken = accesToken;
             RefreshToken = refreshToken;
         }
