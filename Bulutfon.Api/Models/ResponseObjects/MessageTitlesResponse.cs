@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Bulutfon.Model.Models.ResponseObjects
+namespace Bulutfon.Sdk.Models.ResponseObjects
 {
     /// <summary>
     /// Panelden tanımlanmış mesaj başlıkları

@@ -1,4 +1,4 @@
-﻿namespace Bulutfon.Model.Models
+﻿namespace Bulutfon.Sdk.Models
 {
     /// <summary>
     /// Genel kullanıcı bilgileri

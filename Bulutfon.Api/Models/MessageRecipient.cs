@@ -1,4 +1,4 @@
-﻿namespace Bulutfon.Api.Models {
+﻿namespace Bulutfon.Sdk.Models {
 
     /// <summary>
     /// Mesajın alıcısı

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Bulutfon.Model.Models
+namespace Bulutfon.Sdk.Models
 {
     public class Fax
     {

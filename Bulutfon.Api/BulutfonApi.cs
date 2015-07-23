@@ -5,8 +5,8 @@ using System.Net;
 using System.Text;
 using System.Web;
 using BitMiracle.LibTiff.Classic;
-using Bulutfon.Model.Models;
-using Bulutfon.Model.Models.ResponseObjects;
+using Bulutfon.Sdk.Models;
+using Bulutfon.Sdk.Models.ResponseObjects;
 using Bulutfon.OAuth;
 using Newtonsoft.Json;
 
@@ -16,8 +16,6 @@ namespace Bulutfon.Sdk {
     /// Bulutfon Servislerine Ulaşmak İçin Gerekli Metotları Sağlar
     /// </summary>
     public static class BulutfonApi {
-
-        public const string TokenProviderKey = "token_provider";
 
         /// <summary>
         /// https://api.bulutfon.com/
@@ -375,7 +373,7 @@ namespace Bulutfon.Sdk {
         /// </summary>
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns>Mesaj listesi</returns>
-        public static List<Bulutfon.Api.Models.Message> GetMessages(Token token) {
+        public static List<Bulutfon.Sdk.Models.Message> GetMessages(Token token) {
             return GetObject<MessagesResponse>("messages", token).messages;
         }
 
@@ -385,7 +383,7 @@ namespace Bulutfon.Sdk {
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="id">Id</param>
         /// <returns>Mesaj</returns>
-        public static Bulutfon.Api.Models.Message GetMessage(Token token, string id) {
+        public static Bulutfon.Sdk.Models.Message GetMessage(Token token, string id) {
             return GetObject<MessageResponse>("messages", token, id).message;
         }
 

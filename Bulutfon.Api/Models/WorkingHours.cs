@@ -1,4 +1,4 @@
-﻿namespace Bulutfon.Model.Models
+﻿namespace Bulutfon.Sdk.Models
 {
     /// <summary>
     /// Santral Numarasının çalışma saatleri

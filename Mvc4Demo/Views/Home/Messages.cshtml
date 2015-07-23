@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Bulutfon.Model.Models.Message>
+﻿@model IEnumerable<Bulutfon.Sdk.Models.Message>
 
 @{
     ViewBag.Title = "Messages";
@@ -7,7 +7,7 @@
 <h2>Messages</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Yeni SMS", "SendSms")
 </p>
 <table>
     <tr>

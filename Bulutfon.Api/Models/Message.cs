@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Bulutfon.Api.Models {
+namespace Bulutfon.Sdk.Models {
 
     /// <summary>
     /// Mesaj bilgileri

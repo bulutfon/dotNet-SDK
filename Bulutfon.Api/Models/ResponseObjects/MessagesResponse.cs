@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Bulutfon.Model.Models.ResponseObjects
+namespace Bulutfon.Sdk.Models.ResponseObjects
 {
     /// <summary>
     /// Mesaj listesi
@@ -11,6 +11,6 @@ namespace Bulutfon.Model.Models.ResponseObjects
         /// <summary>
         /// Mesajlar
         /// </summary>
-        public List<Bulutfon.Api.Models.Message> messages { get; set; }
+        public List<Bulutfon.Sdk.Models.Message> messages { get; set; }
     }
 }

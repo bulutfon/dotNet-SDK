@@ -1,4 +1,4 @@
-﻿namespace Bulutfon.Model.Models.ResponseObjects
+﻿namespace Bulutfon.Sdk.Models.ResponseObjects
 {
     /// <summary>
     /// Santralde kullanılan telefon numaraları hakkında bilgiler

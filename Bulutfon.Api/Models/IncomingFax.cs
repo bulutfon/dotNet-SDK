@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Bulutfon.Model.Models
+﻿namespace Bulutfon.Sdk.Models
 {
     /// <summary>
     /// Gelen Faks

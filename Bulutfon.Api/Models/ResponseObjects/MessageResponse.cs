@@ -1,4 +1,4 @@
-﻿namespace Bulutfon.Model.Models.ResponseObjects
+﻿namespace Bulutfon.Sdk.Models.ResponseObjects
 {
     /// <summary>
     /// Mesaj Bilgileri
@@ -6,6 +6,6 @@
     /// </summary>
     public class MessageResponse
     {
-        public Bulutfon.Api.Models.Message message { get; set; }
+        public Bulutfon.Sdk.Models.Message message { get; set; }
     }
 }
