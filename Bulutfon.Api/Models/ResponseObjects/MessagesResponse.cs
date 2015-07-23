@@ -11,6 +11,6 @@ namespace Bulutfon.Model.Models.ResponseObjects
         /// <summary>
         /// Mesajlar
         /// </summary>
-        public List<Message> messages { get; set; }
+        public List<Bulutfon.Api.Models.Message> messages { get; set; }
     }
 }

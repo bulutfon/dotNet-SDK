@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace Bulutfon.Model.Models
-{
+namespace Bulutfon.Api.Models {
+
     /// <summary>
     /// Mesaj bilgileri
     /// </summary>

@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Web;
-using Bulutfon.MVC4.Api;
+//using Bulutfon.OAuth.Mvc.Api;
 using DotNetOpenAuth.AspNet;
 using DotNetOpenAuth.AspNet.Clients;
 using DotNetOpenAuth.Messaging;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Bulutfon.MVC4.OAuth {
+namespace Bulutfon.OAuth.Mvc {
 
     /// <summary>
     /// Bulutfon OAuth Client
@@ -161,7 +160,7 @@ namespace Bulutfon.MVC4.OAuth {
 
             var tokenProvider = this.QueryAccessTokens(returnPageUrl, code);
 
-            context.Session[BulutfonApi.TokenProviderKey] = tokenProvider;
+            context.Session[TokenProvider.Key] = tokenProvider;
 
             if (tokenProvider == null || tokenProvider.AccessToken == null)
                 return AuthenticationResult.Failed;

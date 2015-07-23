@@ -41,50 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Announcement.cs" />
-    <Compile Include="Models\AutomaticCall.cs" />
-    <Compile Include="Models\CallFlow.cs" />
-    <Compile Include="Models\Cdr.cs" />
-    <Compile Include="Models\Did.cs" />
-    <Compile Include="Models\Extension.cs" />
-    <Compile Include="Models\FaxRecipient.cs" />
-    <Compile Include="Models\Group.cs" />
-    <Compile Include="Models\IncomingFax.cs" />
-    <Compile Include="Models\Message.cs" />
-    <Compile Include="Models\Fax.cs" />
-    <Compile Include="Models\Post\RequestOutgoingFax.cs" />
-    <Compile Include="Models\Post\RequestSendMessage.cs" />
-    <Compile Include="Models\Post\ResponseOutgoingFax.cs" />
-    <Compile Include="Models\Post\ResponseSendMessage.cs" />
-    <Compile Include="Models\ResponseObjects\OutgoingFaxesResponse.cs" />
-    <Compile Include="Models\ResponseObjects\OutgoingFaxResponse.cs" />
-    <Compile Include="Models\ResponseObjects\MessageResponse.cs" />
-    <Compile Include="Models\MessageTitle.cs" />
-    <Compile Include="Models\MessageRecipient.cs" />
-    <Compile Include="Models\ResponseObjects\ExtensionResponse.cs" />
-    <Compile Include="Models\ResponseObjects\DidsResponse.cs" />
-    <Compile Include="Models\ResponseObjects\DidResponse.cs" />
-    <Compile Include="Models\DidWorkDay.cs" />
-    <Compile Include="Models\Pagination.cs" />
-    <Compile Include="Models\ResponseObjects\CdrResponse.cs" />
-    <Compile Include="Models\Origination.cs" />
-    <Compile Include="Models\ResponseObjects\AutomaticCallResponse.cs" />
-    <Compile Include="Models\CallRange.cs" />
-    <Compile Include="Models\Recipient.cs" />
-    <Compile Include="Models\ResponseObjects\CdrsResponse.cs" />
-    <Compile Include="Models\ResponseObjects\ExtensionsResponse.cs" />
-    <Compile Include="Models\ResponseObjects\GroupResponse.cs" />
-    <Compile Include="Models\ResponseObjects\GroupsResponse.cs" />
-    <Compile Include="Models\ResponseObjects\IncomingFaxesResponse.cs" />
-    <Compile Include="Models\ResponseObjects\MeResponse.cs" />
-    <Compile Include="Models\Credit.cs" />
-    <Compile Include="Models\Pbx.cs" />
-    <Compile Include="Models\ResponseObjects\AnnouncementsResponse.cs" />
-    <Compile Include="Models\ResponseObjects\MessagesResponse.cs" />
-    <Compile Include="Models\ResponseObjects\MessageTitlesResponse.cs" />
-    <Compile Include="Models\User.cs" />
-    <Compile Include="Models\WorkDay.cs" />
-    <Compile Include="Models\WorkingHours.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

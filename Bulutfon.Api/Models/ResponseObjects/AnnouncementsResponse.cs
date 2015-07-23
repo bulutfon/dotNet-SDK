@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace Bulutfon.Model.Models.ResponseObjects
-{
+namespace Bulutfon.Sdk.Models.ResponseObjects {
+
     /// <summary>
     /// Ses dosyaları
     /// GET /announcements.json

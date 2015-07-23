@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Bulutfon.Model.Models.Post {
+namespace Bulutfon.Sdk.Models.Post {
 
     public class ResponseFaxRecipient {
         public long number { get; set; }
@@ -13,7 +13,7 @@ namespace Bulutfon.Model.Models.Post {
         public long did { get; set; }
         public int recipient_count { get; set; }
         public string create_at { get; set; }
-        public List<ResponseFaxRecipient> recipient { get; set; }
+        public List<Bulutfon.Sdk.Models.Post.ResponseFaxRecipient> recipient { get; set; }
         public string message { get; set; }
     }
 }

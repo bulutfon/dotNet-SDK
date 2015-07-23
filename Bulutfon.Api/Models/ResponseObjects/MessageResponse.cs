@@ -6,6 +6,6 @@
     /// </summary>
     public class MessageResponse
     {
-        public Message message { get; set; }
+        public Bulutfon.Api.Models.Message message { get; set; }
     }
 }

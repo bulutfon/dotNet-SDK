@@ -1,5 +1,5 @@
-﻿namespace Bulutfon.Model.Models
-{
+﻿namespace Bulutfon.Api.Models {
+
     /// <summary>
     /// Mesajın alıcısı
     /// </summary>

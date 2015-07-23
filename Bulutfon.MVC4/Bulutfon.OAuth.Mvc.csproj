@@ -7,7 +7,7 @@
     <ProjectGuid>{A022F8DD-6C5F-4005-8D5B-546093A71B3F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bulutfon.MVC4</RootNamespace>
+    <RootNamespace>Bulutfon.OAuth.Mvc</RootNamespace>
     <AssemblyName>Bulutfon.MVC4</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -106,9 +106,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\BulutfonApi.cs" />
-    <Compile Include="Api\TokenProvider.cs" />
-    <Compile Include="OAuth\BulutfonClient.cs" />
+    <Compile Include="BulutfonClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -116,9 +114,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bulutfon.Model\Bulutfon.Model.csproj">
-      <Project>{48dbf7bd-c7c1-44b0-93fc-fef1e8f18d68}</Project>
-      <Name>Bulutfon.Model</Name>
+    <ProjectReference Include="..\Bulutfon.OAuth\Bulutfon.OAuth.csproj">
+      <Project>{c16d5c8f-8c57-4f39-9c59-f14a91ed1667}</Project>
+      <Name>Bulutfon.OAuth</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

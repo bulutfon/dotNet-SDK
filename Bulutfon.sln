@@ -7,11 +7,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bulutfon.MVC3", "Bulutfon\B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebTest", "WebTest", "{0D93F0C8-11D5-482E-91DB-10FE39A82550}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bulutfon.Model", "Bulutfon.Model\Bulutfon.Model.csproj", "{48DBF7BD-C7C1-44B0-93FC-FEF1E8F18D68}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bulutfon.MVC4", "Bulutfon.MVC4\Bulutfon.MVC4.csproj", "{A022F8DD-6C5F-4005-8D5B-546093A71B3F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bulutfon.OAuth.Mvc", "Bulutfon.MVC4\Bulutfon.OAuth.Mvc.csproj", "{A022F8DD-6C5F-4005-8D5B-546093A71B3F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc4Demo", "Mvc4Demo\Mvc4Demo.csproj", "{BF5DDB3A-BDBF-4AC1-863D-4D807DA80980}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bulutfon.OAuth", "Bulutfon.OAuth\Bulutfon.OAuth.csproj", "{C16D5C8F-8C57-4F39-9C59-F14A91ED1667}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bulutfon.Sdk", "Bulutfon.Api\Bulutfon.Sdk.csproj", "{4F5173B4-86F2-4705-95F2-42252BF5CDE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bulutfon.OAuth.Win", "Bulutfon.OAuth.Win\Bulutfon.OAuth.Win.csproj", "{0E4A8084-2CCC-4020-9F3F-26186DCC5CE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +27,6 @@ Global
 		{823B2800-7654-42A8-88E6-A4FBF45CFAAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{823B2800-7654-42A8-88E6-A4FBF45CFAAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{823B2800-7654-42A8-88E6-A4FBF45CFAAB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{48DBF7BD-C7C1-44B0-93FC-FEF1E8F18D68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{48DBF7BD-C7C1-44B0-93FC-FEF1E8F18D68}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{48DBF7BD-C7C1-44B0-93FC-FEF1E8F18D68}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{48DBF7BD-C7C1-44B0-93FC-FEF1E8F18D68}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A022F8DD-6C5F-4005-8D5B-546093A71B3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A022F8DD-6C5F-4005-8D5B-546093A71B3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A022F8DD-6C5F-4005-8D5B-546093A71B3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -35,6 +35,18 @@ Global
 		{BF5DDB3A-BDBF-4AC1-863D-4D807DA80980}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF5DDB3A-BDBF-4AC1-863D-4D807DA80980}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF5DDB3A-BDBF-4AC1-863D-4D807DA80980}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C16D5C8F-8C57-4F39-9C59-F14A91ED1667}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C16D5C8F-8C57-4F39-9C59-F14A91ED1667}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C16D5C8F-8C57-4F39-9C59-F14A91ED1667}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C16D5C8F-8C57-4F39-9C59-F14A91ED1667}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F5173B4-86F2-4705-95F2-42252BF5CDE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F5173B4-86F2-4705-95F2-42252BF5CDE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F5173B4-86F2-4705-95F2-42252BF5CDE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F5173B4-86F2-4705-95F2-42252BF5CDE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E4A8084-2CCC-4020-9F3F-26186DCC5CE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E4A8084-2CCC-4020-9F3F-26186DCC5CE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E4A8084-2CCC-4020-9F3F-26186DCC5CE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E4A8084-2CCC-4020-9F3F-26186DCC5CE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

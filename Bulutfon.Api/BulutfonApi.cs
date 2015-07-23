@@ -4,14 +4,13 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Web;
-using System.Web.Mvc;
 using BitMiracle.LibTiff.Classic;
 using Bulutfon.Model.Models;
-using Bulutfon.Model.Models.Post;
 using Bulutfon.Model.Models.ResponseObjects;
+using Bulutfon.OAuth;
 using Newtonsoft.Json;
 
-namespace Bulutfon.MVC4.Api {
+namespace Bulutfon.Sdk {
 
     /// <summary>
     /// Bulutfon Servislerine Ulaşmak İçin Gerekli Metotları Sağlar
@@ -129,15 +128,15 @@ namespace Bulutfon.MVC4.Api {
         /// <param name="did">Gönderen</param>
         /// <param name="title">Başlık</param>
         /// <returns>Gönderim durumu</returns>
-        public static ResponseOutgoingFax SendFax(TokenProvider tokenProvider, string fileType, string fileName, Stream stream , 
+        public static Bulutfon.Sdk.Models.Post.ResponseOutgoingFax SendFax(TokenProvider tokenProvider, string fileType, string fileName, Stream stream , 
                                                   string receivers, long did, string title = "") {
-            var fax = new RequestOutgoingFax() {
+            var fax = new Bulutfon.Sdk.Models.Post.RequestOutgoingFax() {
                 receivers = receivers,
                 did = did,
                 title = title,
                 attachment = GetAttachmentText(fileType, fileName, stream)
             };
-            return PostObject<RequestOutgoingFax, ResponseOutgoingFax>("outgoing-faxes", tokenProvider, fax);
+            return PostObject<Bulutfon.Sdk.Models.Post.RequestOutgoingFax, Bulutfon.Sdk.Models.Post.ResponseOutgoingFax>("outgoing-faxes", tokenProvider, fax);
         }
 
         /// <summary>
@@ -146,8 +145,8 @@ namespace Bulutfon.MVC4.Api {
         /// <param name="tokenProvider">Access token</param>
         /// <param name="message">Mesaj nesnesi</param>
         /// <returns>Gönderim durumu</returns>
-        public static ResponseSendMessage SendSms(TokenProvider tokenProvider, RequestSendMessage message) {
-            return PostObject<RequestSendMessage, ResponseSendMessage>("messages", tokenProvider, message);
+        public static Bulutfon.Sdk.Models.Post.ResponseSendMessage SendSms(TokenProvider tokenProvider, Bulutfon.Sdk.Models.Post.RequestSendMessage message) {
+            return PostObject<Bulutfon.Sdk.Models.Post.RequestSendMessage, Bulutfon.Sdk.Models.Post.ResponseSendMessage>("messages", tokenProvider, message);
         }
 
         /// <summary>
@@ -161,10 +160,10 @@ namespace Bulutfon.MVC4.Api {
         /// <param name="isFutureSms">Sonra gönderilsin</param>
         /// <param name="sendDate">Gönderim tarihi (sonra gönderilecekse)</param>
         /// <returns>Gönderim durumu</returns>
-        public static ResponseSendMessage SendSms(TokenProvider tokenProvider,
+        public static Bulutfon.Sdk.Models.Post.ResponseSendMessage SendSms(TokenProvider tokenProvider,
             string msgTitle, string msgReceivers, string msgContent, bool isSingleSms, bool isFutureSms, DateTime sendDate) {
 
-            var message = new RequestSendMessage() {
+            var message = new Bulutfon.Sdk.Models.Post.RequestSendMessage() {
                 title = msgTitle,
                 receivers = msgReceivers,
                 content = msgContent,
@@ -184,7 +183,7 @@ namespace Bulutfon.MVC4.Api {
         /// <param name="did">Gönderen</param>
         /// <param name="title">Başlık</param>
         /// <returns>Gönderim durumu</returns>
-        public static ResponseOutgoingFax SendFax(TokenProvider tokenProvider, HttpPostedFileBase file, 
+        public static Bulutfon.Sdk.Models.Post.ResponseOutgoingFax SendFax(TokenProvider tokenProvider, HttpPostedFileBase file, 
                                                   string receivers, long did, string title = "") {
 
             return SendFax(tokenProvider, file.ContentType, Path.GetFileName(file.FileName), file.InputStream, receivers, did, title);
@@ -223,8 +222,8 @@ namespace Bulutfon.MVC4.Api {
         /// </summary>
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns>Anons listesi</returns>
-        public static List<Announcement> GetAnnouncements(TokenProvider tokenProvider) {
-            return GetObject<AnnouncementsResponse>("announcement", tokenProvider).announcements;
+        public static List<Bulutfon.Sdk.Models.Announcement> GetAnnouncements(TokenProvider tokenProvider) {
+            return GetObject<Bulutfon.Sdk.Models.ResponseObjects.AnnouncementsResponse>("announcement", tokenProvider).announcements;
         }
 
         /// <summary>
@@ -342,16 +341,16 @@ namespace Bulutfon.MVC4.Api {
             return Tiff.ClientOpen("in-memory", "r", GetIncomingFaxStream(tokenProvider, id), new TiffStream());
         }
 
-        /// <summary>
-        /// Gelen faksı dosya olarak indir (TIFF)
-        /// Bu metot MVC4 projelerine yöneliktir
-        /// </summary>
-        /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
-        /// <param name="id">Id</param>
-        /// <returns>FileStreamResult olarak faks</returns>
-        public static FileStreamResult DownloadIncomingFaxAsTiff(TokenProvider tokenProvider, string id) {
-            return new FileStreamResult(GetIncomingFaxStream(tokenProvider, id), "image/tiff");
-        }
+        ///// <summary>
+        ///// Gelen faksı dosya olarak indir (TIFF)
+        ///// Bu metot MVC4 projelerine yöneliktir
+        ///// </summary>
+        ///// <param name="tokenProvider">Token provider (access ve refresh token)</param>
+        ///// <param name="id">Id</param>
+        ///// <returns>FileStreamResult olarak faks</returns>
+        //public static FileStreamResult DownloadIncomingFaxAsTiff(TokenProvider tokenProvider, string id) {
+        //    return new FileStreamResult(GetIncomingFaxStream(tokenProvider, id), "image/tiff");
+        //}
 
         /// <summary>
         /// Kullanıcı bilgileri
@@ -376,7 +375,7 @@ namespace Bulutfon.MVC4.Api {
         /// </summary>
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <returns>Mesaj listesi</returns>
-        public static List<Message> GetMessages(TokenProvider tokenProvider) {
+        public static List<Bulutfon.Api.Models.Message> GetMessages(TokenProvider tokenProvider) {
             return GetObject<MessagesResponse>("messages", tokenProvider).messages;
         }
 
@@ -386,7 +385,7 @@ namespace Bulutfon.MVC4.Api {
         /// <param name="tokenProvider">Token provider (access ve refresh token)</param>
         /// <param name="id">Id</param>
         /// <returns>Mesaj</returns>
-        public static Message GetMessage(TokenProvider tokenProvider, string id) {
+        public static Bulutfon.Api.Models.Message GetMessage(TokenProvider tokenProvider, string id) {
             return GetObject<MessageResponse>("messages", tokenProvider, id).message;
         }
 

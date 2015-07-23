@@ -1,5 +1,5 @@
-﻿namespace Bulutfon.Model.Models
-{
+﻿namespace Bulutfon.Sdk.Models {
+
     /// <summary>
     /// Ses dosyası
     /// </summary>

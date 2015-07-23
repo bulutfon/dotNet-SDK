@@ -1,4 +1,4 @@
-﻿namespace Bulutfon.Model.Models.Post {
+﻿namespace Bulutfon.Sdk.Models.Post {
 
     public class RequestOutgoingFax {
         public string title { get; set; }

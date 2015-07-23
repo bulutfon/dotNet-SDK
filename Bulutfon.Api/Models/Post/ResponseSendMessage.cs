@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Bulutfon.Model.Models.Post {
+namespace Bulutfon.Sdk.Models.Post {
 
     public class Recepient {
         public string number { get; set; }

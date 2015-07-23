@@ -1,14 +1,10 @@
 ﻿using System;
 
-namespace Bulutfon.MVC4.Api {
-
-    public class TokenExpiredEventArgs : EventArgs {
-        public string RefreshToken { get; set; }
-    }
-
-    public delegate void TokenExpiredEvent(object s, TokenExpiredEventArgs e);
+namespace Bulutfon.OAuth {
 
     public class TokenProvider {
+
+        public const string Key = "token_provider";
 
         public TokenProvider(string accesToken, string refreshToken) {
             AccessToken = accesToken;
