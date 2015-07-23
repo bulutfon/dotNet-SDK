@@ -3,6 +3,11 @@
     public static class Endpoints {
 
         /// <summary>
+        /// Login Sayfası
+        /// </summary>
+        public const string Login = "https://www.bulutfon.com/accounts/login";
+
+        /// <summary>
         /// Authorization endpoint.
         /// </summary>
         public const string Authorization = "https://www.bulutfon.com/oauth/authorize";

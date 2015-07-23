@@ -16,9 +16,13 @@ namespace Bulutfon.OAuth {
 
         public event TokenExpiredEvent TokenExpired;
 
-        public string AccessToken { get; set; }
+        public void SetAccessToken(string token) {
+            AccessToken = token;
+        }
 
-        public string RefreshToken { get; set; }
+        public string AccessToken { get; private set; }
+
+        public string RefreshToken { get; private set; }
 
         public void RefreshAccessToken() {
             if (TokenExpired != null) {

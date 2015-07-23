@@ -24,14 +24,14 @@ namespace Bulutfon.OAuth.Mvc {
         protected BulutfonWebClient(string providerName, string clientId, string clientSecret) : base(providerName) {
             if (string.IsNullOrWhiteSpace(clientId) || string.IsNullOrWhiteSpace(clientSecret))
                 throw new ArgumentNullException("client id ya da client secret belirtilmemiş!");
-            this.ClientId = clientId;
-            this.ClientSecret = clientSecret;
+            ClientId = clientId;
+            ClientSecret = clientSecret;
         }
         
         protected override Uri GetServiceLoginUrl(Uri returnUrl) {
             var builder = new UriBuilder(Endpoints.Authorization);
             builder.AppendQueryArgument("response_type", "code");
-            builder.AppendQueryArgument("client_id", this.ClientId);
+            builder.AppendQueryArgument("client_id", ClientId);
             builder.AppendQueryArgument("redirect_uri", returnUrl.AbsoluteUri);
             return builder.Uri;
         }
@@ -53,9 +53,9 @@ namespace Bulutfon.OAuth.Mvc {
 
         protected override string QueryAccessToken(Uri returnUrl, string authorizationCode) {
             var dic = new Dictionary<string, string>();
-            dic.Add("client_id", this.ClientId);
+            dic.Add("client_id", ClientId);
             dic.Add("redirect_uri", returnUrl.AbsoluteUri);
-            dic.Add("client_secret", this.ClientSecret);
+            dic.Add("client_secret", ClientSecret);
             dic.Add("code", authorizationCode);
             dic.Add("scope", "cdr");
             dic.Add("grant_type", "authorization_code");
@@ -72,16 +72,16 @@ namespace Bulutfon.OAuth.Mvc {
                 if (string.IsNullOrEmpty(str)) {
                     return null;
                 }
-                JObject JSonResult = JObject.Parse(str);
-                return JSonResult.GetValue("access_token").ToString();
+                JObject jsonResult = JObject.Parse(str);
+                return jsonResult.GetValue("access_token").ToString();
             }
         }
 
         private Token QueryAccessTokens(Uri returnUrl, string authorizationCode) {
             var dic = new Dictionary<string, string>();
-            dic.Add("client_id", this.ClientId);
+            dic.Add("client_id", ClientId);
             dic.Add("redirect_uri", returnUrl.AbsoluteUri);
-            dic.Add("client_secret", this.ClientSecret);
+            dic.Add("client_secret", ClientSecret);
             dic.Add("code", authorizationCode);
             dic.Add("scope", "cdr");
             dic.Add("grant_type", "authorization_code");
@@ -98,21 +98,21 @@ namespace Bulutfon.OAuth.Mvc {
                 if (string.IsNullOrEmpty(str)) {
                     return null;
                 }
-                JObject JSonResult = JObject.Parse(str);
+                JObject jsonResult = JObject.Parse(str);
 
-                var tokenProvider = new Token(
-                    JSonResult.GetValue("access_token").ToString(), JSonResult.GetValue("refresh_token").ToString());
+                var token = new Token(
+                    jsonResult.GetValue("access_token").ToString(), jsonResult.GetValue("refresh_token").ToString());
 
-                tokenProvider.TokenExpired += tokenProvider_TokenExpired;
+                token.TokenExpired += tokenProviderTokenExpired;
 
-                return tokenProvider;
+                return token;
             }
         }
 
-        void tokenProvider_TokenExpired(object s, TokenExpiredEventArgs e) {
+        void tokenProviderTokenExpired(object s, TokenExpiredEventArgs e) {
             var dic = new Dictionary<string, string>();
-            dic.Add("client_id", this.ClientId);
-            dic.Add("client_secret", this.ClientSecret);
+            dic.Add("client_id", ClientId);
+            dic.Add("client_secret", ClientSecret);
             dic.Add("refresh_token", e.RefreshToken);
             dic.Add("scope", "cdr");
             dic.Add("grant_type", "refresh_token");
@@ -129,8 +129,8 @@ namespace Bulutfon.OAuth.Mvc {
                 if (string.IsNullOrEmpty(str)) {
                     return;
                 }
-                JObject JSonResult = JObject.Parse(str);
-                ((Token)s).AccessToken = JSonResult.GetValue("access_token").ToString();
+                JObject jsonResult = JObject.Parse(str);
+                ((Token)s).SetAccessToken(jsonResult.GetValue("access_token").ToString());
             }
         }
 
@@ -139,14 +139,14 @@ namespace Bulutfon.OAuth.Mvc {
             if (string.IsNullOrEmpty(code))
                 return AuthenticationResult.Failed;
 
-            var tokenProvider = this.QueryAccessTokens(returnPageUrl, code);
+            var token = QueryAccessTokens(returnPageUrl, code);
 
-            context.Session[Token.Key] = tokenProvider;
+            context.Session[Token.Key] = token;
 
-            if (tokenProvider == null || tokenProvider.AccessToken == null)
+            if (token == null || token.AccessToken == null)
                 return AuthenticationResult.Failed;
 
-            IDictionary<string, string> userData = this.GetUserData(tokenProvider.AccessToken);
+            IDictionary<string, string> userData = GetUserData(token.AccessToken);
             if (userData == null)
                 return AuthenticationResult.Failed;
 

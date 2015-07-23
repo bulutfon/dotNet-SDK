@@ -41,7 +41,7 @@
         /// <summary>
         /// Santral Numarasının yönlendirileceği numara
         /// </summary>
-        public int destination_number { get; set; }
+        public string destination_number { get; set; }
 
         /// <summary>
         /// Mesai saatlerinin aktif olup olmadığı
