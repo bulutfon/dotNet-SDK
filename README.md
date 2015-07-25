@@ -41,6 +41,7 @@ Bulutfon .Net SDK, ASP.NET MVC (4 ve üzeri) ve desktop (WinForms) projelerinin,
     * ```Model class``` olarak ```Message (Bulutfon.Sdk.Models)``` seçin
     * ```Scaffold template``` olarak ```List```'i seçin
     * ```Add```'e tıklayın
+4- Bulutfon sitesindeki uygulama ayarlarından redirect uri kısmını güncelleyin (https://localhost:44304/Account/ExternalLoginCallback gibi bir adres olması gerektir)
 
 # DESKTOP (WINDOWS FORMS)
 
@@ -49,7 +50,7 @@ Bulutfon .Net SDK, ASP.NET MVC (4 ve üzeri) ve desktop (WinForms) projelerinin,
             var loggedIn = LoginForm.Login(
                 "CLIENT_ID_NIZ", // Bulutfon servisindeki uygulamanın Client ID'si
                 "CLIENT_SECRET"), // Bulutfon servisindeki uygulamanın Client Secret'ı
-                this);
+                this); // ya da null
 ```
 2- Verilere erişmek için gene BulutfonApi metotlarından yararlanabilirsiniz. Örneğin:
 ``` csharp
@@ -58,6 +59,7 @@ Bulutfon .Net SDK, ASP.NET MVC (4 ve üzeri) ve desktop (WinForms) projelerinin,
                 dataGridView1.DataSource = BulutfonApi.GetDids(Authentication.Token);
             }
 ```
+3- Bulutfon sitesindeki uygulama ayarlarından redirect uri kısmını güncelleyin (urn:ietf:wg:oauth:2.0:oob)
 
 # BULUTFON API
 
@@ -69,7 +71,12 @@ Bulutfon .Net SDK, ASP.NET MVC (4 ve üzeri) ve desktop (WinForms) projelerinin,
 * Mesaj gönderimi: ```SendSms(/*...*/);```
 * vb.
 
+# LİSANS
 
+Telif Hakkı (c) 2015, Bulutfon Telekomünikasyon A.Ş.
+
+Bu yazılım MIT lisansı ile dağıtılmaktadır.
+http://opensource.org/licenses/MIT
 
 
 
