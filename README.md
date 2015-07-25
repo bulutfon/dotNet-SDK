@@ -8,7 +8,7 @@ Bulutfon .Net SDK, ASP.NET MVC (4 ve üzeri) ve desktop (WinForms) projelerinin,
 # ASP.NET MVC
 
 1- Geliştirme ve testler için öncelikle projeye https desteği eklenmelidir. Bunun için:
-  * Proje seçilip ```Properties``` penceresine geçin
+  * Projeyi seçip ```Properties``` penceresine geçin
   * ```SSL Enabled```ı ```True``` olarak belirleyin
   * ```SSL URL```de https://localhost:44304/ gibi bir adres oluşacaktır, bu adresi kopyalayın
   * Projeye sağ tıklayıp menüden ```Properties```i seçin
@@ -25,3 +25,26 @@ Bulutfon .Net SDK, ASP.NET MVC (4 ve üzeri) ve desktop (WinForms) projelerinin,
         "Bulutfon", null);
 ```
 
+3- Bulutfon API'sine erişim
+  * Örneğin mesaj (SMS) listesini çekmek için:
+    * ```HomeController``` içinde aşağıdaki metodu oluşturun:
+``` csharp
+        [Authorize]
+        public ActionResult Messages() {
+            var messages = BulutfonApi.GetMessages((Token)Session[Token.Key]);
+            return View(messages);
+        }
+```
+  * ```View```'u oluşturmak için ise:
+    * Metot ismi üzerine sağ tıklayıp menüden ```Add View...```'u seçin
+    * ```Create a strongly-typed view```u işaretleyin
+    * ```Model class``` olarak ```Message (Bulutfon.Sdk.Models)``` seçin
+    * ```Scaffold template``` olarak ```List```'i seçin
+    * ```Add```'e tıklayın
+
+# DESKTOP (WINDOWS FORMS)
+
+
+# BULUTFON API
+
+```BulutfonApi``` statik sınıf altında, hem web (MVC), hem de WinForms ve diğer .NET projeleri içinde kullanılacak tüm API fonksiyonları mevcuttur
