@@ -1,4 +1,4 @@
 namespace Bulutfon.OAuth {
 
-    public delegate void TokenExpiredEvent(object s, TokenExpiredEventArgs e);
+    public delegate void TokenExpiredEvent(object sender, TokenExpiredEventArgs e);
 }

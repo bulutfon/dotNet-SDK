@@ -58,7 +58,7 @@ namespace Bulutfon.Sdk {
                     return GetObject<T>(uri, token, key);
                 }
                 else {
-                    throw e;
+                    throw;
                 }
             }
         }
@@ -96,7 +96,7 @@ namespace Bulutfon.Sdk {
                     return PostObject<TRequest, TResponse>(uri, token, data);
                 }
                 else {
-                    throw e;
+                    throw;
                 }
             }
         }
@@ -210,7 +210,7 @@ namespace Bulutfon.Sdk {
                     return GetStream(uri, token, key);
                 }
                 else {
-                    throw e;
+                    throw;
                 }
             }
         }
