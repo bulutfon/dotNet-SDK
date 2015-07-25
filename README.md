@@ -45,11 +45,37 @@ Bulutfon .Net SDK, ASP.NET MVC (4 ve üzeri) ve desktop (WinForms) projelerinin,
 # DESKTOP (WINDOWS FORMS)
 
 1- Login olmak için ilgili düğme ya da menünün koduna aşağıdaki satırları ekleyin:
-var loggedIn = LoginForm.Login(
-                "d68a8d69c16b6ac209980dc5ec7b381933d91c71ca37d83e8e5c64b0ae2f3f9e", 
-                "6b9f79ac744ce39a61b1ba236782b7de4d54a96f9f6c43077449cd86c9e9f799", 
+``` csharp
+            var loggedIn = LoginForm.Login(
+                "CLIENT_ID_NIZ", // Bulutfon servisindeki uygulamanın Client ID'si
+                "CLIENT_SECRET"), // Bulutfon servisindeki uygulamanın Client Secret'ı
                 this);
+```
+2- Verilere erişmek için gene BulutfonApi metotlarından yararlanabilirsiniz. Örneğin:
+``` csharp
+            if (loggedIn) {
+                //button1.Enabled = false;
+                dataGridView1.DataSource = BulutfonApi.GetDids(Authentication.Token);
+            }
+```
 
 # BULUTFON API
 
-```BulutfonApi``` statik sınıfı dahilinde, hem web (MVC), hem de WinForms ve diğer .NET projeleri içinde kullanılacak tüm API fonksiyonları mevcuttur
+```BulutfonApi``` statik sınıfı dahilinde, hem web (MVC), hem de WinForms ve diğer .NET projeleri içinde kullanılacak tüm API fonksiyonları mevcuttur.
+
+Örneğin mesajlar (SMS) için,
+* Mesaj listesi: ```GetMessages(/*token*/);```
+* Mesaj detayları: ```GetMessage(id, /*token*/);```
+* Mesaj gönderimi: ```SendSms(/*...*/);```
+* vb.
+
+
+
+
+
+
+
+
+
+
+
