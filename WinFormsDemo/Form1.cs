@@ -26,7 +26,6 @@ namespace WinFormsDemo
                 this);
             if (loggedIn) {
                 button1.Enabled = false;
-                //MessageBox.Show(string.Format("Başarılı!\r\ntoken = '{0}'", Authentication.Token.AccessToken));
                 dataGridView1.DataSource = BulutfonApi.GetDids(Authentication.Token);
             }
         }
