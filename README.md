@@ -7,4 +7,10 @@ Bulutfon .Net SDK, ASP.NET MVC (4 ve üzeri) ve desktop (WinForms) projelerinin,
 
 # ASP.NET MVC
 
-- Geliştirme için öncelikle projeye https desteği eklenmelidir. 
+1- Geliştirme için öncelikle projeye https desteği eklenmelidir. Bunun için:
+  * Proje seçilip ```Properties``` penceresine geçin
+  * ```SSL Enabled```ı ```True``` olarak belirleyin
+  * ```SSL URL```de https://localhost:44304/ gibi bir adres oluşacaktır, bu adresi kopyalayın
+  * Projeye sağ tıklayıp menüden ```Properties```i seçin
+  * Açılan pencerede soldan ```Web``` sayfasını seçin
+  * ```Project URL``` kısmına kopyalamış olduğunuz adresi yapıştırın
