@@ -5,17 +5,17 @@
         /// <summary>
         /// Login Sayfası
         /// </summary>
-        public const string Login = "https://www.bulutfon.com/accounts/login";
+        public const string Login = "https://app.bulutfon.com/accounts/login";
 
         /// <summary>
         /// Authorization endpoint.
         /// </summary>
-        public const string Authorization = "https://www.bulutfon.com/oauth/authorize";
+        public const string Authorization = "https://app.bulutfon.com/oauth/authorize";
 
         /// <summary>
         /// Token endpoint.
         /// </summary>
-        public const string Token = "https://www.bulutfon.com/oauth/token";
+        public const string Token = "https://app.bulutfon.com/oauth/token";
 
         /// <summary>
         /// User info endpoint.
