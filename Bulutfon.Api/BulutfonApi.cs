@@ -9,6 +9,7 @@ using Bulutfon.Sdk.Models;
 using Bulutfon.Sdk.Models.ResponseObjects;
 using Bulutfon.OAuth;
 using Newtonsoft.Json;
+using Bulutfon.Sdk.Models.Post;
 
 namespace Bulutfon.Sdk {
 
@@ -66,14 +67,14 @@ namespace Bulutfon.Sdk {
         /// <summary>
         /// POST (REST)
         /// </summary>
-        /// <typeparam name="TRequest">Request sınıfı</typeparam>
+        /// <typeparam name="TPostObject">Request sınıfı</typeparam>
         /// <typeparam name="TResponse">Response sınıfı</typeparam>
         /// <param name="uri">Adres</param>
         /// <param name="token">Token provider (access ve refresh token)</param>
         /// <param name="data">Veri (nesne)</param>
         /// <returns>Servisten dönen nesne</returns>
-        public static TResponse PostObject<TRequest, TResponse>(string uri, Token token, TRequest data) 
-            where TRequest : class 
+        public static TResponse PostObject<TPostObject, TResponse>(string uri, Token token, TPostObject data) 
+            where TPostObject : class 
             where TResponse : class {
 
             const string tokenKey = "?access_token=";
@@ -93,7 +94,7 @@ namespace Bulutfon.Sdk {
             catch (Exception e) {
                 if (e.Message.ToLower().Contains("expired")) {
                     token.RefreshAccessToken();
-                    return PostObject<TRequest, TResponse>(uri, token, data);
+                    return PostObject<TPostObject, TResponse>(uri, token, data);
                 }
                 else {
                     throw;
@@ -231,6 +232,10 @@ namespace Bulutfon.Sdk {
         /// <returns>Otomatik aramalar</returns>
         public static AutomaticCall GetAutomaticCall(Token token) {
             return GetObject<AutomaticCallResponse>("automatic-calls", token).automatic_call;
+        }
+
+        public static ResponseAutomaticCall CreateAutomaticCall(Token token, AutomaticCall automaticCall) {
+            return PostObject<AutomaticCall, ResponseAutomaticCall>("automatic-calls", token, automaticCall);
         }
 
         /// <summary>
