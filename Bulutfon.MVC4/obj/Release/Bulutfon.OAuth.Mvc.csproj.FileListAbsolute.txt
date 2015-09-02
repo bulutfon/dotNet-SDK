@@ -30,3 +30,5 @@ C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\Bulutfon.MVC
 C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\Bulutfon.MVC4\obj\Release\Bulutfon.OAuth.Mvc.csprojResolveAssemblyReference.cache
 C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\Bulutfon.MVC4\obj\Release\Bulutfon.MVC4.dll
 C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\Bulutfon.MVC4\obj\Release\Bulutfon.MVC4.pdb
+C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\Bulutfon.MVC4\bin\Release\Bulutfon.Api.dll
+C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\Bulutfon.MVC4\bin\Release\Bulutfon.Api.pdb

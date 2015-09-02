@@ -7,7 +7,9 @@ Bulutfon .Net SDK, ASP.NET MVC (4 ve üzeri) ve desktop (WinForms) projelerinin,
 
 # ASP.NET MVC
 
-1- Geliştirme ve testler için öncelikle projeye https desteği eklenmelidir. Bunun için:
+1- Bulutfon'u nuget ile projenize dahil edin ```Install-Package Bulutfon.MVC4```
+
+2- Geliştirme ve testler için öncelikle projeye https desteği eklenmelidir. Bunun için:
   * Projeyi seçip ```Properties``` penceresine geçin
   * ```SSL Enabled```ı ```True``` olarak belirleyin
   * ```SSL URL```de https://localhost:44304/ gibi bir adres oluşacaktır, bu adresi kopyalayın
@@ -15,17 +17,29 @@ Bulutfon .Net SDK, ASP.NET MVC (4 ve üzeri) ve desktop (WinForms) projelerinin,
   * Açılan pencerede soldan ```Web``` sayfasını seçin
   * ```Project URL``` kısmına kopyalamış olduğunuz adresi yapıştırın
 
-2- *OAuth client*'lara *BulutfonWebClient* eklenmelidir. Bunun için:
+3- *OAuth client*'lara *BulutfonWebClient* eklenmelidir. Bunun için:
   * *App_Start\AuthConfig.cs* dosyasını açın
   * ```RegisterAuth()``` metoduna aşağıdaki kodu ekleyin:
 ``` csharp
-    OAuthWebSecurity.RegisterClient(new BulutfonWebClient(
-        clientId:"CLIENT_ID_NIZ", // Bulutfon servisindeki uygulamanın Client ID'si
-        clientSecret:"CLIENT_SECRET"), // Bulutfon servisindeki uygulamanın Client Secret'ı
-        "Bulutfon", null);
+	TokenRefreshCallback refreshCallback = new TokenRefreshCallback(tokenRefreshed);
+	BulutfonWebClient client = new BulutfonWebClient(
+                clientId: "CLIENT_ID_NIZ", // Bulutfon servisindeki uygulamanın Client ID'si
+                clientSecret: "CLIENT_ID_NIZ", // Bulutfon servisindeki uygulamanın Client Secret'ı 
+				refreshCallback: refreshCallback // Expire olan token refreshlendiğinde tetiklenecek method. Kullanmayacaksanız null değer gönderebilirsiniz. 
+				);
+    OAuthWebSecurity.RegisterClient(client, "Bulutfon", null);
+
 ```
 
-3- Bulutfon API'sine erişim
+``` csharp
+	// Token yenilendiğinde tetiklenecek refreshCallback methodu
+	public static void tokenRefreshed(object sender, string access_token, string refreh_token) {
+		// Do something
+	}
+
+```
+
+4- Bulutfon API'sine erişim
   * Örneğin mesaj (SMS) listesini çekmek için:
     * ```HomeController``` içinde aşağıdaki metodu oluşturun:
 ``` csharp
@@ -41,9 +55,11 @@ Bulutfon .Net SDK, ASP.NET MVC (4 ve üzeri) ve desktop (WinForms) projelerinin,
     * ```Model class``` olarak ```Message (Bulutfon.Sdk.Models)``` seçin
     * ```Scaffold template``` olarak ```List```'i seçin
     * ```Add```'e tıklayın
-4- Bulutfon sitesindeki uygulama ayarlarından redirect uri kısmını güncelleyin (https://localhost:44304/Account/ExternalLoginCallback gibi bir adres olması gerektir)
+5- Bulutfon sitesindeki uygulama ayarlarından redirect uri kısmını güncelleyin (https://localhost:44304/Account/ExternalLoginCallback gibi bir adres olması gerektir)
 
 # DESKTOP (WINDOWS FORMS)
+
+1- Bulutfon'u nuget ile projenize dahil edin ```Install-Package Bulutfon.OAuth.Win```
 
 1- Login olmak için ilgili düğme ya da menünün koduna aşağıdaki satırları ekleyin:
 ``` csharp
@@ -60,6 +76,22 @@ Bulutfon .Net SDK, ASP.NET MVC (4 ve üzeri) ve desktop (WinForms) projelerinin,
             }
 ```
 3- Bulutfon sitesindeki uygulama ayarlarından redirect uri kısmını güncelleyin (urn:ietf:wg:oauth:2.0:oob)
+
+4- Token expire olduğunda otomatik yenilenecektir. Bu eventı yakalayıp yeni tokenlara erişmek istiyorsanız. Token alındıktan sonra aşağıdaki kodu ekleyebilirsiniz.
+``` csharp
+		{	
+            if (loggedIn) {
+                //button1.Enabled = false;
+				Authentication.Token.RefreshCallback += TokensRefreshed;
+                dataGridView1.DataSource = BulutfonApi.GetDids(Authentication.Token);
+            }
+
+		}
+		void TokensRefreshed(object sender, string access_token, string refreh_token)
+        {
+            
+        }
+```
 
 # BULUTFON API
 

@@ -16,8 +16,15 @@ namespace Bulutfon.OAuth {
 
         public event TokenExpiredEvent TokenExpired;
 
+        public event TokenRefreshCallback RefreshCallback;
+
         public void SetAccessToken(string token) {
             AccessToken = token;
+        }
+
+        public void SetRefreshToken(string token)
+        {
+            RefreshToken = token;
         }
 
         public string AccessToken { get; private set; }
@@ -29,6 +36,10 @@ namespace Bulutfon.OAuth {
                 var e = new TokenExpiredEventArgs();
                 e.RefreshToken = RefreshToken;
                 TokenExpired(this, e);
+                if (RefreshCallback != null)
+                {
+                    RefreshCallback(this, AccessToken, RefreshToken);
+                }
             }
         }
     }

@@ -59,7 +59,7 @@ namespace Bulutfon.OAuth.Win {
             }
         }
 
-        void tokenProviderTokenExpired(object s, TokenExpiredEventArgs e) {
+        public void tokenProviderTokenExpired(object s, TokenExpiredEventArgs e) {
             var dic = new Dictionary<string, string>();
             dic.Add("client_id", ClientId);
             dic.Add("client_secret", ClientSecret);
@@ -81,6 +81,7 @@ namespace Bulutfon.OAuth.Win {
                 }
                 JObject jsonResult = JObject.Parse(str);
                 ((Token)s).SetAccessToken(jsonResult.GetValue("access_token").ToString());
+                ((Token)s).SetRefreshToken(jsonResult.GetValue("refresh_token").ToString());
             }
         }
 

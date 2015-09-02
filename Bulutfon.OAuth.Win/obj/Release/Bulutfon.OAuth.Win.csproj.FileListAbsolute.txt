@@ -9,3 +9,7 @@ C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\Bulutfon.OAu
 C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\Bulutfon.OAuth.Win\obj\Release\Bulutfon.OAuth.Win.csproj.GenerateResource.Cache
 C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\Bulutfon.OAuth.Win\obj\Release\Bulutfon.OAuth.Win.dll
 C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\Bulutfon.OAuth.Win\obj\Release\Bulutfon.OAuth.Win.pdb
+C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\Bulutfon.OAuth.Win\bin\Release\Bulutfon.Api.dll
+C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\Bulutfon.OAuth.Win\bin\Release\BitMiracle.LibTiff.NET.dll
+C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\Bulutfon.OAuth.Win\bin\Release\Bulutfon.Api.pdb
+C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\Bulutfon.OAuth.Win\bin\Release\BitMiracle.LibTiff.NET.xml

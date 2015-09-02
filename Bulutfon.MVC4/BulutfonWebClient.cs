@@ -16,15 +16,19 @@ namespace Bulutfon.OAuth.Mvc {
 
         protected string ClientId { get; private set; }
         protected string ClientSecret { get; private set; }
+        protected TokenRefreshCallback RefreshCallback;
 
-        public BulutfonWebClient(string clientId, string clientSecret) : this("Bulutfon", clientId, clientSecret) {
+        public BulutfonWebClient(string clientId, string clientSecret, TokenRefreshCallback refreshCallback)  : this("Bulutfon", clientId, clientSecret, refreshCallback)
+        {
         }
 
-        protected BulutfonWebClient(string providerName, string clientId, string clientSecret) : base(providerName) {
+        protected BulutfonWebClient(string providerName, string clientId, string clientSecret, TokenRefreshCallback refreshCallback) : base(providerName)
+        {
             if (string.IsNullOrWhiteSpace(clientId) || string.IsNullOrWhiteSpace(clientSecret))
                 throw new ArgumentNullException("client id ya da client secret belirtilmemiş!");
             ClientId = clientId;
             ClientSecret = clientSecret;
+            RefreshCallback = refreshCallback;
         }
         
         protected override Uri GetServiceLoginUrl(Uri returnUrl) {
@@ -108,7 +112,7 @@ namespace Bulutfon.OAuth.Mvc {
             }
         }
 
-        void tokenProviderTokenExpired(object s, TokenExpiredEventArgs e) {
+        public void tokenProviderTokenExpired(object s, TokenExpiredEventArgs e) {
             var dic = new Dictionary<string, string>();
             dic.Add("client_id", ClientId);
             dic.Add("client_secret", ClientSecret);
@@ -130,6 +134,8 @@ namespace Bulutfon.OAuth.Mvc {
                 }
                 JObject jsonResult = JObject.Parse(str);
                 ((Token)s).SetAccessToken(jsonResult.GetValue("access_token").ToString());
+                ((Token)s).SetRefreshToken(jsonResult.GetValue("refresh_token").ToString());
+                ((Token)s).RefreshCallback += RefreshCallback;
             }
         }
 
