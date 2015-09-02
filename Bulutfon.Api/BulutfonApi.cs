@@ -46,6 +46,7 @@ namespace Bulutfon.Sdk {
                     var keyValue = string.Empty;
                     if (!string.IsNullOrEmpty(key))
                         keyValue = string.Format("/{0}", key);
+                    client.Encoding = ASCIIEncoding.UTF8;
                     string str = client.DownloadString(BaseUri + uri + keyValue + tokenKey + token.AccessToken);
                     if (string.IsNullOrEmpty(str)) {
                         return null;
@@ -222,7 +223,7 @@ namespace Bulutfon.Sdk {
         /// <param name="token">Token provider (access ve refresh token)</param>
         /// <returns>Anons listesi</returns>
         public static List<Bulutfon.Sdk.Models.Announcement> GetAnnouncements(Token token) {
-            return GetObject<Bulutfon.Sdk.Models.ResponseObjects.AnnouncementsResponse>("announcement", token).announcements;
+            return GetObject<Bulutfon.Sdk.Models.ResponseObjects.AnnouncementsResponse>("announcements", token).announcements;
         }
 
         /// <summary>
