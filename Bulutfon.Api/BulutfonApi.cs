@@ -234,8 +234,8 @@ namespace Bulutfon.Sdk {
             return GetObject<AutomaticCallResponse>("automatic-calls", token).automatic_call;
         }
 
-        public static ResponseAutomaticCall CreateAutomaticCall(Token token, AutomaticCall automaticCall) {
-            return PostObject<AutomaticCall, ResponseAutomaticCall>("automatic-calls", token, automaticCall);
+        public static ResponseAutomaticCall CreateAutomaticCall(Token token, AutomaticCallCreator automaticCall) {
+            return PostObject<AutomaticCallCreator, ResponseAutomaticCall>("automatic-calls", token, automaticCall);
         }
 
         /// <summary>

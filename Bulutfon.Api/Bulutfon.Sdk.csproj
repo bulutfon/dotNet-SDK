@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BitMiracle.LibTiff.NET">
-      <HintPath>..\packages\BitMiracle.LibTiff.NET.2.4.511.0\lib\net20\BitMiracle.LibTiff.NET.dll</HintPath>
+      <HintPath>..\packages\BitMiracle.LibTiff.NET.2.4.518.0\lib\net20\BitMiracle.LibTiff.NET.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -51,6 +51,7 @@
     </Compile>
     <Compile Include="Models\Announcement.cs" />
     <Compile Include="Models\AutomaticCall.cs" />
+    <Compile Include="Models\AutomaticCallCreator.cs" />
     <Compile Include="Models\CallFlow.cs" />
     <Compile Include="Models\CallRange.cs" />
     <Compile Include="Models\Cdr.cs" />

@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Bulutfon.OAuth.Win;
+using Bulutfon.Sdk.Models;
+using Bulutfon.Sdk.Models.ResponseObjects;
+using Bulutfon.Sdk.Models.Post;
 using Bulutfon.Sdk;
 
 namespace WinFormsDemo
@@ -25,8 +28,18 @@ namespace WinFormsDemo
                 "6b9f79ac744ce39a61b1ba236782b7de4d54a96f9f6c43077449cd86c9e9f799", 
                 this);
             if (loggedIn) {
-                button1.Enabled = false;
-                dataGridView1.DataSource = BulutfonApi.GetDids(Authentication.Token);
+                //button1.Enabled = false;
+                //dataGridView1.DataSource = BulutfonApi.GetDids(Authentication.Token);
+                AutomaticCallCreator auto = new AutomaticCallCreator();
+                auto.title = "DotNet Deneme2";
+                auto.did = 908508850249;
+                auto.receivers = "905322041584";
+                auto.announcement_id = 1353;
+                ResponseAutomaticCall x =  BulutfonApi.CreateAutomaticCall(Authentication.Token, auto);
+                String mes = x.message;
+                int b = 5;
+
+                String ada = "asd";
             }
         }
     }
