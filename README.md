@@ -61,23 +61,23 @@ Bulutfon .Net SDK, ASP.NET MVC (4 ve üzeri) ve desktop (WinForms) projelerinin,
 
 1- Bulutfon'u nuget ile projenize dahil edin ```Install-Package Bulutfon.OAuth.Win```
 
-1- Login olmak için ilgili düğme ya da menünün koduna aşağıdaki satırları ekleyin:
+2- Login olmak için ilgili düğme ya da menünün koduna aşağıdaki satırları ekleyin:
 ``` csharp
             var loggedIn = LoginForm.Login(
                 "CLIENT_ID_NIZ", // Bulutfon servisindeki uygulamanın Client ID'si
                 "CLIENT_SECRET"), // Bulutfon servisindeki uygulamanın Client Secret'ı
                 this); // ya da null
 ```
-2- Verilere erişmek için gene BulutfonApi metotlarından yararlanabilirsiniz. Örneğin:
+3- Verilere erişmek için gene BulutfonApi metotlarından yararlanabilirsiniz. Örneğin:
 ``` csharp
             if (loggedIn) {
                 //button1.Enabled = false;
                 dataGridView1.DataSource = BulutfonApi.GetDids(Authentication.Token);
             }
 ```
-3- Bulutfon sitesindeki uygulama ayarlarından redirect uri kısmını güncelleyin (urn:ietf:wg:oauth:2.0:oob)
+4- Bulutfon sitesindeki uygulama ayarlarından redirect uri kısmını güncelleyin (urn:ietf:wg:oauth:2.0:oob)
 
-4- Token expire olduğunda otomatik yenilenecektir. Bu eventı yakalayıp yeni tokenlara erişmek istiyorsanız. Token alındıktan sonra aşağıdaki kodu ekleyebilirsiniz.
+5- Token expire olduğunda otomatik yenilenecektir. Bu eventı yakalayıp yeni tokenlara erişmek istiyorsanız. Token alındıktan sonra aşağıdaki kodu ekleyebilirsiniz.
 ``` csharp
 		{	
             if (loggedIn) {
