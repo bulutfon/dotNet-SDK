@@ -33,7 +33,7 @@ Bulutfon .Net SDK, ASP.NET MVC (4 ve üzeri) ve desktop (WinForms) projelerinin,
 
 ``` csharp
 	// Token yenilendiğinde tetiklenecek refreshCallback methodu
-	public static void tokenRefreshed(object sender, string access_token, string refreh_token) {
+	public static void tokenRefreshed(object sender, string access_token, string refresh_token) {
 		// Do something
 	}
 

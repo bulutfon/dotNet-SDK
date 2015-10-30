@@ -94,6 +94,7 @@
     <Compile Include="Models\ResponseObjects\MessageTitlesResponse.cs" />
     <Compile Include="Models\ResponseObjects\OutgoingFaxesResponse.cs" />
     <Compile Include="Models\ResponseObjects\OutgoingFaxResponse.cs" />
+    <Compile Include="Models\TokenInfo.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\WorkDay.cs" />
     <Compile Include="Models\WorkingHours.cs" />

@@ -61,6 +61,8 @@ namespace Mvc4Demo.Controllers {
         [Authorize]
         public ActionResult OutgoingFaxes() {
             var faxes = BulutfonApi.GetFaxes((Token)Session[Token.Key]);
+            Token x = (Token)Session[Token.Key];
+            x.RefreshAccessToken();
             return View(faxes);
         }
 

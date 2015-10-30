@@ -51,6 +51,7 @@ namespace Bulutfon.Sdk {
                     if (string.IsNullOrEmpty(str)) {
                         return null;
                     }
+
                     return JsonConvert.DeserializeObject<T>(str, SerializerSettings());
                 }
             }
@@ -393,6 +394,7 @@ namespace Bulutfon.Sdk {
             return GetObject<MessageResponse>("messages", token, id).message;
         }
 
+
         /// <summary>
         /// Gönderilen fakslar
         /// </summary>
@@ -410,6 +412,16 @@ namespace Bulutfon.Sdk {
         /// <returns>Faks</returns>
         public static Fax GetFax(Token token, string id) {
             return GetObject<OutgoingFaxResponse>("outgoing-faxes", token, id).fax;
+        }
+
+        /// <summary>
+        /// Token expire bilgisi
+        /// </summary>
+        /// <param name="accessToken">Access Token</param>
+        /// <returns>Token Bilgisi</returns>
+        public static TokenInfo GetTokenExpireInfo(String accessToken)
+        {
+            return GetObject<TokenInfo>("token-info", new Token("", ""), accessToken);
         }
     }
 }

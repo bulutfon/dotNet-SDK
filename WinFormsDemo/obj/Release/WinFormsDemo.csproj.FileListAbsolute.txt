@@ -1,7 +1,3 @@
-C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\WinFormsDemo\obj\Release\WinFormsDemo.csprojResolveAssemblyReference.cache
-C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\WinFormsDemo\obj\Release\WinFormsDemo.Form1.resources
-C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\WinFormsDemo\obj\Release\WinFormsDemo.Properties.Resources.resources
-C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\WinFormsDemo\obj\Release\WinFormsDemo.csproj.GenerateResource.Cache
 C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\WinFormsDemo\bin\Release\WinFormsDemo.exe
 C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\WinFormsDemo\bin\Release\WinFormsDemo.pdb
 C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\WinFormsDemo\bin\Release\Bulutfon.Api.dll
@@ -14,5 +10,9 @@ C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\WinFormsDemo
 C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\WinFormsDemo\bin\Release\Bulutfon.OAuth.pdb
 C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\WinFormsDemo\bin\Release\Newtonsoft.Json.xml
 C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\WinFormsDemo\bin\Release\BitMiracle.LibTiff.NET.xml
+C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\WinFormsDemo\obj\Release\WinFormsDemo.csprojResolveAssemblyReference.cache
+C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\WinFormsDemo\obj\Release\WinFormsDemo.Form1.resources
+C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\WinFormsDemo\obj\Release\WinFormsDemo.Properties.Resources.resources
+C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\WinFormsDemo\obj\Release\WinFormsDemo.csproj.GenerateResource.Cache
 C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\WinFormsDemo\obj\Release\WinFormsDemo.exe
 C:\Users\H.Türkü\Documents\Visual Studio 2013\Projects\dotNet-SDK\WinFormsDemo\obj\Release\WinFormsDemo.pdb
