@@ -31,6 +31,38 @@ namespace Bulutfon.Sdk {
             return new JsonSerializerSettings() { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat };
         }
 
+        public static String GetFile(string uri, Token token, string key, string path)
+        {
+            const string tokenKey = "?access_token=";
+            string filename = path + "/" + key + ".ogg";
+            try
+            {
+                using (WebClient client = new WebClient())
+                {
+                    var keyValue = string.Empty;
+                    if (!string.IsNullOrEmpty(key))
+                        keyValue = string.Format("/{0}", key);
+
+                    client.DownloadFile(BaseUri + uri + keyValue + tokenKey + token.AccessToken, filename);
+
+
+                    return filename;
+                }
+            }
+            catch (Exception e)
+            {
+                if (e.Message.ToLower().Contains("expired"))
+                {
+                    token.RefreshAccessToken();
+                    return GetFile(uri, token, key, path);
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
+
         /// <summary>
         /// GET (REST)
         /// </summary>
@@ -103,6 +135,7 @@ namespace Bulutfon.Sdk {
                 }
             }
         }
+
 
         /// <summary>
         /// Gönderilen faks dosyasını metin olarak (base64) hazırlar
@@ -344,6 +377,11 @@ namespace Bulutfon.Sdk {
         /// <returns>Tiff nesnesi olarak gelen faks</returns>
         public static Tiff GetIncomingFaxAsTiff(Token token, string id) {
             return Tiff.ClientOpen("in-memory", "r", GetIncomingFaxStream(token, id), new TiffStream());
+        }
+
+        public static String GetCallRecord(Token token, String uuid, String path)
+        {
+            return GetFile("call-records", token, uuid, path);
         }
 
         ///// <summary>
