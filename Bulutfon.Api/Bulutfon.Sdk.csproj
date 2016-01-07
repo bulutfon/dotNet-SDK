@@ -78,6 +78,9 @@
     <Compile Include="Models\Post\ResponseSendMessage.cs" />
     <Compile Include="Models\Recipient.cs" />
     <Compile Include="Models\ResponseObjects\AnnouncementsResponse.cs" />
+    <Compile Include="Models\ResponseObjects\AutomaticCallListResponse.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Models\ResponseObjects\AutomaticCallResponse.cs" />
     <Compile Include="Models\ResponseObjects\CdrResponse.cs" />
     <Compile Include="Models\ResponseObjects\CdrsResponse.cs" />
