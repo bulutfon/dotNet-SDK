@@ -15,6 +15,6 @@
         /// <summary>
         /// Aranan kişi bir tuşa bastıysa basılan tuş
         /// </summary>
-        public int gather { get; set; }
+        public int? gather { get; set; }
     }
 }

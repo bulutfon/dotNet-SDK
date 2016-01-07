@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Web;
@@ -122,7 +123,8 @@ namespace Bulutfon.Sdk {
                     if (ret == null || ret.Length == 0) {
                         return null;
                     }
-                    return JsonConvert.DeserializeObject<TResponse>(Encoding.UTF8.GetString(ret), SerializerSettings());
+                    var resString = Encoding.UTF8.GetString(ret);
+                    return JsonConvert.DeserializeObject<TResponse>(resString, SerializerSettings());
                 }
             }
             catch (Exception e) {
@@ -265,8 +267,19 @@ namespace Bulutfon.Sdk {
         /// </summary>
         /// <param name="token">Token provider (access ve refresh token)</param>
         /// <returns>Otomatik aramalar</returns>
-        public static AutomaticCall GetAutomaticCall(Token token) {
-            return GetObject<AutomaticCallResponse>("automatic-calls", token).automatic_call;
+        public static List<AutomaticCall> GetAutomaticCalls(Token token) {
+            return GetObject<AutomaticCallListResponse>("automatic-calls", token).automatic_calls;
+        }
+
+        /// <summary>
+        /// Id si verilen otomatik aramayı getir
+        /// </summary>
+        /// <param name="token">Token provider (access ve refresh token)</param>
+        /// <param name="id">Automatic Call Id</param>
+        /// <returns>Otomatik aramalar</returns>
+        public static AutomaticCall GetAutomaticCall(Token token,string id)
+        {
+            return GetObject<AutomaticCallResponse>("automatic-calls", token,id).automatic_call;
         }
 
         public static ResponseAutomaticCall CreateAutomaticCall(Token token, AutomaticCallCreator automaticCall) {
